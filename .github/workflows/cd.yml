@@ -1,0 +1,64 @@
+name: CD with Docker & SSH
+
+on:
+  workflow_run:
+    workflows: ["CI with Gradle"]
+    types:
+      - completed
+
+  workflow_dispatch:
+
+jobs:
+  cd:
+    name: Build & Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 코드 체크아웃
+        uses: actions/checkout@v4
+
+      - name: 빌드된 JAR 파일 다운로드
+        uses: actions/download-artifact@v4
+        with:
+          name: backend-jar
+          path: build/libs
+
+      - name: Docker 로그인
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+      - name: Docker 이미지 빌드
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGENAME }}:latest .
+
+      - name: Docker Hub에 Push
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGENAME }}:latest
+
+      - name: 서버에 `docker-compose.yml` 파일 전송
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: "docker-compose.yaml"
+          target: "~/backend"
+
+      - name: 서버에서 `docker-compose` 실행
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            cd ~/backend
+            docker-compose pull
+            docker-compose down
+            docker-compose up -d --force-recreate --remove-orphans
+            docker image prune -f
+
+      - name: 서버에서 `docker-compose.yml` 파일 삭제
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          script: |
+            rm -f ~/backend/docker-compose.yaml
