@@ -1,7 +1,0 @@
-spring:
-  application:
-    name: kgu-capstone
-
-
-springdoc:
-  server-url: https://noraknorak-api.kro.kr
