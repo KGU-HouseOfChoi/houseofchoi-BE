@@ -1,0 +1,13 @@
+services:
+  spring-app:
+    container_name: spring-app
+    image: "noraknorak/backend:latest"
+    ports:
+      - "8080:8080"
+    networks:
+      - app-network
+
+
+networks:
+  app-network:
+    driver: bridge
