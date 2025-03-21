@@ -23,13 +23,8 @@ repositories {
     mavenCentral()
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-web'
-    compileOnly 'org.projectlombok:lombok'
-    annotationProcessor 'org.projectlombok:lombok'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
-}
+apply from: "./gradle/spring.gradle"
+apply from: "./gradle/swagger.gradle"
 
 tasks.named('test') {
     useJUnitPlatform()
