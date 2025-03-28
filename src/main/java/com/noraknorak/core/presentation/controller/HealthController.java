@@ -1,5 +1,6 @@
-package com.noraknorak.core.presentation;
+package com.noraknorak.core.presentation.controller;
 
+import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.core.presentation.swagger.HealthSwagger;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

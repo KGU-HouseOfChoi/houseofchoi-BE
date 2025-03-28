@@ -6,8 +6,29 @@ services:
       - "8080:8080"
     networks:
       - app-network
+    depends_on:
+      - db
+
+  db:
+    container_name: db
+    image: "mysql:8.0"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: capstone
+      MYSQL_USER: dev_capstone
+      MYSQL_PASSWORD: 1234
+    ports:
+      - "3306:3306"
+    networks:
+      - app-network
+    volumes:
+      - mysql-data:/var/lib/mysql
 
 
 networks:
   app-network:
     driver: bridge
+
+volumes:
+  mysql-data:
