@@ -24,8 +24,10 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 @Configuration
-@OpenAPIDefinition(info = @Info(title = "노락노락 API", description = "노락노락 : API 명세서", version = "v1.0.0"),
-        servers = {@Server(url = "${springdoc.server-url}", description = "Https Server URL")})
+@OpenAPIDefinition(
+        info = @Info(title = "어르심 API", description = "머르심 : API 명세서", version = "v1.0.0"),
+        servers = {@Server(url = "${springdoc.server-url}", description = "Https Server URL")}
+)
 public class SwaggerConfiguration {
     @Bean
     public OpenAPI openAPI(){
