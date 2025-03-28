@@ -10,6 +10,8 @@ services:
       - app-network
     depends_on:
       - db
+    environment:
+      SPRING_PROFILES_ACTIVE: local
 
   db:
     container_name: db
@@ -20,13 +22,14 @@ services:
       MYSQL_DATABASE: capstone
       MYSQL_USER: dev_capstone
       MYSQL_PASSWORD: 1234
+      TZ: Asia/Seoul
     ports:
       - "3307:3306"
     networks:
       - app-network
     volumes:
       - mysql-data:/var/lib/mysql
-
+    command: --default-time-zone='+09:00'
 
 networks:
   app-network:
