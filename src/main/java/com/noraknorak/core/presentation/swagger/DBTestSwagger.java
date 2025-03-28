@@ -1,0 +1,14 @@
+package com.noraknorak.core.presentation.swagger;
+
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
+
+@Tag(name = "DB", description = "DB 테스트")
+public interface DBTestSwagger {
+    @Operation(
+            summary = "DB Test API",
+            description = "현재 데이터 베이스가 연결 되어 있는지 확인합니다.",
+            operationId = "/db/test"
+    )
+    public String testDatabaseConnection();
+}
