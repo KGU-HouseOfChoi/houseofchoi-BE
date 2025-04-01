@@ -1,6 +1,6 @@
-package com.noraknorak.core.configuration.swagger;
+package com.noraknorak.core.config.swagger;
 
-import com.noraknorak.core.configuration.exception.error.BaseErrorCode;
+import com.noraknorak.core.config.exception.error.BaseErrorCode;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

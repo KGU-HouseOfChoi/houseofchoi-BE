@@ -1,7 +1,7 @@
 package com.noraknorak.core.presentation;
 
-import com.noraknorak.core.configuration.exception.DomainException;
-import com.noraknorak.core.configuration.exception.error.BaseErrorCode;
+import com.noraknorak.core.config.exception.DomainException;
+import com.noraknorak.core.config.exception.error.BaseErrorCode;
 import lombok.Builder;
 import lombok.Getter;
 import org.springframework.web.bind.MethodArgumentNotValidException;
