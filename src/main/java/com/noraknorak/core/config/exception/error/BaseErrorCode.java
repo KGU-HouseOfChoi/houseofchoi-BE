@@ -1,4 +1,4 @@
-package com.noraknorak.core.configuration.exception.error;
+package com.noraknorak.core.config.exception.error;
 
 import org.springframework.http.HttpStatus;
 

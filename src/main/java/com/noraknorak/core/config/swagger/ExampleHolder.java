@@ -1,4 +1,4 @@
-package com.noraknorak.core.configuration.swagger;
+package com.noraknorak.core.config.swagger;
 
 import io.swagger.v3.oas.models.examples.Example;
 import lombok.Builder;

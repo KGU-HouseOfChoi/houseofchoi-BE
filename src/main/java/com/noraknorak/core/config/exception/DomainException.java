@@ -1,6 +1,6 @@
-package com.noraknorak.core.configuration.exception;
+package com.noraknorak.core.config.exception;
 
-import com.noraknorak.core.configuration.exception.error.BaseErrorCode;
+import com.noraknorak.core.config.exception.error.BaseErrorCode;
 import lombok.Getter;
 import org.springframework.http.HttpStatus;
 

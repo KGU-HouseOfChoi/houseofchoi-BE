@@ -1,6 +1,6 @@
-package com.noraknorak.core.configuration.swagger;
+package com.noraknorak.core.config.swagger;
 
-import com.noraknorak.core.configuration.exception.error.BaseErrorCode;
+import com.noraknorak.core.config.exception.error.BaseErrorCode;
 import com.noraknorak.core.presentation.ErrorResponse;
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.models.Operation;
