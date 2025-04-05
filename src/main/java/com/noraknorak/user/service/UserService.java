@@ -14,6 +14,7 @@ public class UserService {
 
     private final UserRepository userRepository;
 
+    //유저 등록
     @Transactional
     public void signUp(UserSignUpRequest request) {
         if (userRepository.existsByPhone(request.getPhone())) {
@@ -23,7 +24,10 @@ public class UserService {
         User user = User.builder()
                 .name(request.getName())
                 .phone(request.getPhone())
-                .role(Role.GUARDIAN)
+                .birth(request.getBirth())
+                .gender(request.getGender())
+                .role(request.getRole())
+                .personality_tag(request.getPersonality_tag())
                 .build();
 
         userRepository.save(user);
