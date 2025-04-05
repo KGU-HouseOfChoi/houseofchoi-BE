@@ -24,7 +24,7 @@ public class User extends BaseLongIdEntity {
     @Column(nullable = false)
     private String gender;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Enumerated(EnumType.STRING)
     private Role role;
 
