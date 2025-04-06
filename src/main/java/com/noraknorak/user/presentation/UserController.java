@@ -6,7 +6,6 @@ import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.dto.request.UserSignUpRequest;
 import com.noraknorak.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
-import jakarta.annotation.PostConstruct;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -22,13 +21,9 @@ public class UserController {
     @Operation(summary = "회원가입 API", description = "사용자로부터 회원 정보를 입력받아 회원가입을 진행합니다.")
     @ApiErrorCode(GlobalErrorCode.class)
     @PostMapping("/signup")
-    public ResponseEntity<RestResponse<String>> signUp(@Valid @RequestBody UserSignUpRequest request) {
+    public ResponseEntity<RestResponse<Boolean>> signUp(@Valid @RequestBody UserSignUpRequest request) {
         userService.signUp(request);
-        return ResponseEntity.ok(new RestResponse<>("회원가입이 완료되었습니다."));
+        return ResponseEntity.ok(new RestResponse<>(true));
     }
 
-    @PostConstruct
-    public void init() {
-        System.out.println("🔥 UserController loaded!");
-    }
 }

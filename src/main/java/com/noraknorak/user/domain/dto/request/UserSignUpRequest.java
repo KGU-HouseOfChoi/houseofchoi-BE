@@ -24,5 +24,5 @@ public class UserSignUpRequest {
     private Role role;
 
     @NotBlank(message = "")
-    private String personality_tag;
+    private String personalityTag;
 }
