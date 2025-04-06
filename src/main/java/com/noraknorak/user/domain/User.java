@@ -15,7 +15,7 @@ public class User extends BaseLongIdEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String phone;
 
     @Column(nullable = false)
@@ -29,6 +29,6 @@ public class User extends BaseLongIdEntity {
     private Role role;
 
     @Column(nullable = false)
-    private String personality_tag;
+    private String personalityTag;
 
 }

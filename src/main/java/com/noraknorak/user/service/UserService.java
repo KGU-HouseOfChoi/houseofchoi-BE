@@ -1,6 +1,5 @@
 package com.noraknorak.user.service;
 
-import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.domain.dto.request.UserSignUpRequest;
@@ -27,7 +26,7 @@ public class UserService {
                 .birth(request.getBirth())
                 .gender(request.getGender())
                 .role(request.getRole())
-                .personality_tag(request.getPersonality_tag())
+                .personalityTag(request.getPersonalityTag())
                 .build();
 
         userRepository.save(user);
