@@ -2,7 +2,7 @@ package com.noraknorak.user.service;
 
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
-import com.noraknorak.user.domain.dto.request.UserSignUpRequest;
+import com.noraknorak.user.presentation.request.UserSignUpRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

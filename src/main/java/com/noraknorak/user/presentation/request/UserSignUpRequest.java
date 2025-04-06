@@ -1,4 +1,4 @@
-package com.noraknorak.user.domain.dto.request;
+package com.noraknorak.user.presentation.request;
 
 import com.noraknorak.user.domain.Role;
 import jakarta.validation.constraints.NotBlank;
