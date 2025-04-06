@@ -3,7 +3,7 @@ package com.noraknorak.user.presentation;
 import com.noraknorak.core.config.exception.GlobalErrorCode;
 import com.noraknorak.core.config.swagger.ApiErrorCode;
 import com.noraknorak.core.presentation.RestResponse;
-import com.noraknorak.user.domain.dto.request.UserSignUpRequest;
+import com.noraknorak.user.presentation.request.UserSignUpRequest;
 import com.noraknorak.user.service.UserService;
 import io.swagger.v3.oas.annotations.Operation;
 import jakarta.validation.Valid;
