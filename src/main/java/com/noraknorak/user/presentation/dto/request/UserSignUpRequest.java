@@ -15,10 +15,4 @@ public class UserSignUpRequest {
 
     @NotBlank(message = "")
     private String birth;
-
-    @NotBlank(message = "")
-    private String gender;
-
-    @NotNull(message = "")
-    private Role role;
 }
