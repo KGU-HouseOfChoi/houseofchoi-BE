@@ -35,6 +35,8 @@ services:
     command: [ "redis-server", "--appendonly", "yes" ]
     networks:
       - app-network
+    volumes:
+      - redis-data:/data
 
 networks:
   app-network:
@@ -42,3 +44,4 @@ networks:
 
 volumes:
   mysql-data:
+  redis-data:
