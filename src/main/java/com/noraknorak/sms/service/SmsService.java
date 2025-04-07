@@ -1,6 +1,7 @@
 package com.noraknorak.sms.service;
 
 import com.noraknorak.core.infrastructure.service.RedisService;
+import com.noraknorak.core.util.sms.PhoneNumberUtils;
 import com.noraknorak.core.util.sms.SmsSender;
 import com.noraknorak.sms.domain.AuthCodeGenerator;
 import com.noraknorak.sms.domain.AuthCodeManager;
@@ -23,10 +24,10 @@ public class SmsService {
     public void sendSms(String toPhoneNumber) throws Exception {
         String code = AuthCodeGenerator.generateCode();
 
-        authCodeManager.saveCode(toPhoneNumber, code, CODE_EXPIRE_SECONDS);
+        authCodeManager.saveCode(PhoneNumberUtils.normalize(toPhoneNumber), code, CODE_EXPIRE_SECONDS);
 
         String message = smsMessageFactory.createAuthMessage(code);
-        smsSender.send(toPhoneNumber, message);
+        smsSender.send(PhoneNumberUtils.normalize(toPhoneNumber), message);
     }
 
     public boolean verifyCode(String phoneNumber, String inputCode) throws Exception {
