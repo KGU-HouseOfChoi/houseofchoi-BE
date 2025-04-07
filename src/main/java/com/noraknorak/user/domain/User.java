@@ -10,6 +10,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
+@Table(name = "users")
 public class User extends BaseLongIdEntity {
 
     @Column(nullable = false)
