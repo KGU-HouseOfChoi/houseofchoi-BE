@@ -1,7 +1,7 @@
 package com.noraknorak.user.service;
 
 import com.noraknorak.sms.domain.AuthCodeManager;
-import com.noraknorak.sms.exception.SmsErrorCode;
+import com.noraknorak.user.domain.value.ResidentRegistrationNumber;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.exception.UserErrorCode;
@@ -25,11 +25,14 @@ public class UserRegisterService {
             throw UserErrorCode.MULTIPLE_PHONE_ERROR.toException();
         }
 
+        ResidentRegistrationNumber residentRegistrationNumber
+                = new ResidentRegistrationNumber(request.getBirth());
+
         User user = User.builder()
                 .name(request.getName())
                 .phone(request.getPhone())
-                .birth(getBirthday(request.getBirth()))
-                .gender(getGenderByBirth(request.getBirth()))
+                .birth(residentRegistrationNumber.extractBirthDate())
+                .gender(residentRegistrationNumber.extractGender())
                 .build();
 
         userRepository.save(user);
@@ -47,21 +50,5 @@ public class UserRegisterService {
             return true;
         }
         throw UserErrorCode.NOT_EQUAL_CODE.toException();
-    }
-
-    private String getGenderByBirth(String birth) {
-        int lastNum = Character.getNumericValue(birth.charAt(birth.length() - 1));
-
-        // 주민번호 뒷자리 2,4인 경우 여성
-        if(lastNum % 2 == 0 ) {
-            return "여자";
-        }
-        else {
-            return "남자";
-        }
-    }
-
-    private String getBirthday(String birth) {
-        return birth.substring(0, birth.length() - 1);
     }
 }
