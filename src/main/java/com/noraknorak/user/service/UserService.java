@@ -32,7 +32,7 @@ public class UserService {
     }
 
     private String getGenderByBirth(String birth) {
-        int lastNum = birth.charAt(birth.length() - 1);
+        int lastNum = Character.getNumericValue(birth.charAt(birth.length() - 1));
 
         // 주민번호 뒷자리 2,4인 경우 여성
         if(lastNum % 2 == 0 ) {
