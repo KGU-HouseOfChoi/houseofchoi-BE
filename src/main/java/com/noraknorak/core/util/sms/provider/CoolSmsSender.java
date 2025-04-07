@@ -39,7 +39,7 @@ public class CoolSmsSender implements SmsSender {
             SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
             log.info("CoolSMS 응답: {}", response);
         } catch (Exception e) {
-            throw SmsErrorCode.FAIL_SMS_SEND.toException();
+            throw SmsErrorCode.FAILED_SMS_SEND.toException();
         }
     }
 }

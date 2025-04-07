@@ -5,7 +5,6 @@ import com.noraknorak.core.util.sms.PhoneNumberUtils;
 import com.noraknorak.core.util.sms.SmsSender;
 import com.noraknorak.sms.domain.AuthCodeGenerator;
 import com.noraknorak.sms.domain.AuthCodeManager;
-import com.noraknorak.sms.exception.SmsErrorCode;
 import com.noraknorak.sms.factory.SmsMessageFactory;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -28,16 +27,6 @@ public class SmsService {
 
         String message = smsMessageFactory.createAuthMessage(code);
         smsSender.send(PhoneNumberUtils.normalize(toPhoneNumber), message);
-    }
-
-    public boolean verifyCode(String phoneNumber, String inputCode) throws Exception {
-        String storedCode = authCodeManager.getCode(phoneNumber);
-
-        if (storedCode != null && storedCode.equals(inputCode)) {
-            authCodeManager.deleteCode(phoneNumber);
-            return true;
-        }
-        throw SmsErrorCode.NOT_EQUAL_CODE.toException();
     }
 }
 
