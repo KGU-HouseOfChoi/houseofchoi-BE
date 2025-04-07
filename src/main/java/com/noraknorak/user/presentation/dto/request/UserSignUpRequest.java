@@ -1,16 +1,14 @@
 package com.noraknorak.user.presentation.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
-import lombok.Data;
 
-@Data
-public class UserSignUpRequest {
+public record UserSignUpRequest(
     @NotBlank(message = "")
-    private String name;
+    String name,
 
     @NotBlank(message = "")
-    private String phone;
+    String phone,
 
     @NotBlank(message = "")
-    private String birth;
-}
+    String birth
+){}

@@ -1,9 +1,7 @@
 package com.noraknorak.user.domain.value;
 
 import com.noraknorak.user.exception.UserErrorCode;
-import lombok.Getter;
 
-@Getter
 public record ResidentRegistrationNumber(
         String raw
 ) {

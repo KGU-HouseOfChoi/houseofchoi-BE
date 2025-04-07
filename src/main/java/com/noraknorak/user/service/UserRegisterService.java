@@ -21,16 +21,16 @@ public class UserRegisterService {
     //유저 등록
     @Transactional
     public void signUp(UserSignUpRequest request) {
-        if (userRepository.existsByPhone(request.getPhone())) {
+        if (userRepository.existsByPhone(request.phone())) {
             throw UserErrorCode.MULTIPLE_PHONE_ERROR.toException();
         }
 
         ResidentRegistrationNumber residentRegistrationNumber
-                = new ResidentRegistrationNumber(request.getBirth());
+                = new ResidentRegistrationNumber(request.birth());
 
         User user = User.builder()
-                .name(request.getName())
-                .phone(request.getPhone())
+                .name(request.name())
+                .phone(request.phone())
                 .birth(residentRegistrationNumber.extractBirthDate())
                 .gender(residentRegistrationNumber.extractGender())
                 .build();
@@ -39,14 +39,14 @@ public class UserRegisterService {
     }
 
     public boolean verifyCode(UserVerifyCodeRequest userVerifyCodeRequest){
-        String storedCode = authCodeManager.getCode(userVerifyCodeRequest.getPhoneNum());
+        String storedCode = authCodeManager.getCode(userVerifyCodeRequest.phoneNum());
 
         if(storedCode == null){
             throw UserErrorCode.CODE_NOT_FOUND.toException();
         }
 
-        if (storedCode.equals(userVerifyCodeRequest.getCode())) {
-            authCodeManager.deleteCode(userVerifyCodeRequest.getPhoneNum());
+        if (storedCode.equals(userVerifyCodeRequest.code())) {
+            authCodeManager.deleteCode(userVerifyCodeRequest.phoneNum());
             return true;
         }
         throw UserErrorCode.NOT_EQUAL_CODE.toException();
