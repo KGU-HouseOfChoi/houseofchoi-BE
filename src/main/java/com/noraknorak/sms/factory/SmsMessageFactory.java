@@ -1,12 +1,24 @@
 package com.noraknorak.sms.factory;
 
+import com.noraknorak.sms.exception.SmsErrorCode;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Component
 public class SmsMessageFactory {
-    private static final String MESSAGE_TEMPLATE  = "[노락노락] 인증번호는 %s입니다.";
+    private final String messageTemplate;
 
-    public String createAuthMessage(String code){
-        return String.format(MESSAGE_TEMPLATE , code);
+    public SmsMessageFactory(
+            @Value("${coolsms.message-template}")
+            String messageTemplate
+    ) {
+        this.messageTemplate = messageTemplate;
+    }
+
+    public String createAuthMessage(String code) throws Exception {
+        if(code == null || code.isEmpty()){
+            throw SmsErrorCode.INVALID_AUTH_CODE.toException();
+        }
+        return String.format(messageTemplate , code);
     }
 }

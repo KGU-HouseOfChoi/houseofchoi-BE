@@ -38,7 +38,11 @@ public class UserRegisterService {
     public boolean verifyCode(UserVerifyCodeRequest userVerifyCodeRequest){
         String storedCode = authCodeManager.getCode(userVerifyCodeRequest.getPhoneNum());
 
-        if (storedCode != null && storedCode.equals(userVerifyCodeRequest.getCode())) {
+        if(storedCode == null){
+            throw UserErrorCode.CODE_NOT_FOUND.toException();
+        }
+
+        if (storedCode.equals(userVerifyCodeRequest.getCode())) {
             authCodeManager.deleteCode(userVerifyCodeRequest.getPhoneNum());
             return true;
         }
