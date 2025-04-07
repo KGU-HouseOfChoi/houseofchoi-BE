@@ -1,4 +1,4 @@
-package com.noraknorak.user.domain.dto.request;
+package com.noraknorak.user.presentation.dto.request;
 
 import com.noraknorak.user.domain.Role;
 import jakarta.validation.constraints.NotBlank;
@@ -7,7 +7,6 @@ import lombok.Data;
 
 @Data
 public class UserSignUpRequest {
-
     @NotBlank(message = "")
     private String name;
 
@@ -16,13 +15,4 @@ public class UserSignUpRequest {
 
     @NotBlank(message = "")
     private String birth;
-
-    @NotBlank(message = "")
-    private String gender;
-
-    @NotNull(message = "")
-    private Role role;
-
-    @NotBlank(message = "")
-    private String personalityTag;
 }
