@@ -16,8 +16,9 @@ public class RedisController implements RedisSwagger {
     private static final String KEY = "hello";
     private static final String VALUE = "redis";
 
+    @Override
     @PostMapping("/set")
-    public ResponseEntity<RestResponse<Boolean>> setVALUE() {
+    public ResponseEntity<RestResponse<Boolean>> setValue() {
         try {
             redisTemplate.opsForValue().set(KEY, VALUE);
             return ResponseEntity.ok(new RestResponse<>(true));
@@ -26,8 +27,9 @@ public class RedisController implements RedisSwagger {
         }
     }
 
+    @Override
     @GetMapping("/get")
-    public ResponseEntity<RestResponse<Object>> getVALUE() {
+    public ResponseEntity<RestResponse<Object>> getValue() {
         try{
             String value = (String) redisTemplate.opsForValue().get(KEY);
             if(value != null){
