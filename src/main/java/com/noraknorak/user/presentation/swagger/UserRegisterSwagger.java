@@ -27,5 +27,5 @@ public interface UserRegisterSwagger {
             operationId = "user/verify"
     )
     @ApiErrorCode(UserErrorCode.class)
-    ResponseEntity<RestResponse<Boolean>> verifyCodeController(@Valid @RequestBody UserVerifyCodeRequest userVerifyCodeRequest);
+    ResponseEntity<RestResponse<Boolean>> verifyCode(@Valid @RequestBody UserVerifyCodeRequest userVerifyCodeRequest);
 }
