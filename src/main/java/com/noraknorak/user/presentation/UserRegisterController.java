@@ -27,7 +27,7 @@ public class UserRegisterController implements UserRegisterSwagger {
     @Override
     @PostMapping("/verify")
     public ResponseEntity<RestResponse<Boolean>> verifyCode(@Valid @RequestBody UserVerifyCodeRequest userVerifyCodeRequest) {
-        userRegisterService.verifyCode(userVerifyCodeRequest);
-        return ResponseEntity.ok(new RestResponse<>(true));
+        boolean result = userRegisterService.verifyCode(userVerifyCodeRequest);
+        return ResponseEntity.ok(new RestResponse<>(result));
     }
 }
