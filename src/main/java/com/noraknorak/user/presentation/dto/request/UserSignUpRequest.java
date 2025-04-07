@@ -1,8 +1,6 @@
 package com.noraknorak.user.presentation.dto.request;
 
-import com.noraknorak.user.domain.Role;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 @Data
