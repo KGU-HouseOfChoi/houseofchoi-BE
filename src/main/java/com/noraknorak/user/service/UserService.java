@@ -2,6 +2,7 @@ package com.noraknorak.user.service;
 
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
+import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class UserService {
     @Transactional
     public void signUp(UserSignUpRequest request) {
         if (userRepository.existsByPhone(request.getPhone())) {
-            throw new IllegalArgumentException("이미 가입된 전화번호입니다.");
+            throw UserErrorCode.MULTIPLE_PHONE_ERROR.toException();
         }
 
         User user = User.builder()
