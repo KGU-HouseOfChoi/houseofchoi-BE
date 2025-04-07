@@ -1,42 +1,28 @@
 package com.noraknorak.sms.service;
 
+import com.noraknorak.core.util.sms.SmsSender;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import net.nurigo.sdk.NurigoApp;
-import net.nurigo.sdk.message.model.Message;
-import net.nurigo.sdk.message.request.SingleMessageSendingRequest;
-import net.nurigo.sdk.message.response.SingleMessageSentResponse;
-import net.nurigo.sdk.message.service.DefaultMessageService;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+
+import java.security.SecureRandom;
 
 @Service
 @Slf4j
+@RequiredArgsConstructor
 public class SmsService {
 
-    private final DefaultMessageService messageService;
-
-    @Value("${coolsms.senderPhone}")
-    private String senderPhone;
-
-    public SmsService(
-            @Value("${coolsms.api-key}") String apiKey,
-            @Value("${coolsms.api-secret}") String apiSecret
-    ) {
-        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret, "https://api.coolsms.co.kr");
-    }
+    private final SmsSender smsSender;
+    private static final SecureRandom random = new SecureRandom();
 
     public void sendSms(String toPhoneNumber) {
-        Message message = new Message();
-        message.setFrom(senderPhone); // 등록된 발신번호
-        message.setTo(toPhoneNumber);
-        message.setText("[노락노락] 인증번호는 123456입니다."); // 실제 인증번호 넣으면 됨
+        String message = String.format("[노락노락] 인증번호는 %s입니다.", generateCode());
+        smsSender.send(toPhoneNumber, message);
+    }
 
-        try {
-            SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
-            log.info("CoolSMS 응답: {}", response);
-        } catch (Exception e) {
-            log.error("CoolSMS 전송 실패", e);
-        }
+    public static String generateCode() {
+        int number = random.nextInt(900_000) + 100_000;
+        return String.valueOf(number);
     }
 }
 
