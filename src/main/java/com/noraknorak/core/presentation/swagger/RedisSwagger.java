@@ -19,5 +19,5 @@ public interface RedisSwagger {
             description = "현재 레디스가 연결되어 있고 값을 가져올 수 있는지 확인합니다.",
             operationId = "/redis/get"
     )
-    public ResponseEntity<RestResponse<String>> getValue();
+    public ResponseEntity<RestResponse<Object>> getValue();
 }

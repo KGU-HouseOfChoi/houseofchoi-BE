@@ -19,16 +19,26 @@ public class RedisController implements RedisSwagger {
     @Override
     @PostMapping("/set")
     public ResponseEntity<RestResponse<Boolean>> setValue() {
-        redisTemplate.opsForValue().set(key, value);
-        return ResponseEntity.ok(new RestResponse<>(true));
+        try {
+            redisTemplate.opsForValue().set(key, value);
+            return ResponseEntity.ok(new RestResponse<>(true));
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(new RestResponse<>(false));
+        }
     }
 
     @Override
     @GetMapping("/get")
-    public ResponseEntity<RestResponse<String>> getValue() {
-        String value = (String) redisTemplate.opsForValue().getAndDelete(key);
-        return value != null
-                ? ResponseEntity.ok(new RestResponse<>(value))
-                : ResponseEntity.ok(new RestResponse<>("false"));
+    public ResponseEntity<RestResponse<Object>> getValue() {
+        try{
+            String value = (String) redisTemplate.opsForValue().get(key);
+            if(value != null){
+                return ResponseEntity.ok(new RestResponse<>(value));
+            }else{
+                return ResponseEntity.ok(new RestResponse<>(false));
+            }
+        }catch (Exception e){
+            return ResponseEntity.internalServerError().body(new RestResponse<>(false));
+        }
     }
 }
