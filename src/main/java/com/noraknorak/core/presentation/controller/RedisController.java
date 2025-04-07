@@ -13,25 +13,23 @@ import org.springframework.web.bind.annotation.*;
 public class RedisController implements RedisSwagger {
     private final RedisTemplate redisTemplate;
 
-    private String key = "hello";
-    private String value = "redis";
+    private static final String KEY = "hello";
+    private static final String VALUE = "redis";
 
-    @Override
     @PostMapping("/set")
-    public ResponseEntity<RestResponse<Boolean>> setValue() {
+    public ResponseEntity<RestResponse<Boolean>> setVALUE() {
         try {
-            redisTemplate.opsForValue().set(key, value);
+            redisTemplate.opsForValue().set(KEY, VALUE);
             return ResponseEntity.ok(new RestResponse<>(true));
         }catch (Exception e){
             return ResponseEntity.internalServerError().body(new RestResponse<>(false));
         }
     }
 
-    @Override
     @GetMapping("/get")
-    public ResponseEntity<RestResponse<Object>> getValue() {
+    public ResponseEntity<RestResponse<Object>> getVALUE() {
         try{
-            String value = (String) redisTemplate.opsForValue().get(key);
+            String value = (String) redisTemplate.opsForValue().get(KEY);
             if(value != null){
                 return ResponseEntity.ok(new RestResponse<>(value));
             }else{
