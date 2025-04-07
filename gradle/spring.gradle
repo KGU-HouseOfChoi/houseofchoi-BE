@@ -5,10 +5,10 @@ dependencies {
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
-    // objectMapper
+    // JSON 직렬화/역직렬화 라이브러리
     implementation 'com.fasterxml.jackson.core:jackson-databind'
 
-    //redis
+    // redis
     implementation 'org.springframework.boot:spring-boot-starter-data-redis'
 
     // test
