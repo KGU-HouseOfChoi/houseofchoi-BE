@@ -1,5 +1,9 @@
-package com.noraknorak.core.util.sms;
+package com.noraknorak.core.util.sms.provider;
 
+import com.noraknorak.core.util.sms.SmsSender;
+import com.noraknorak.core.util.sms.properties.CoolSmsProperties;
+import com.noraknorak.sms.exception.SmsErrorCode;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import net.nurigo.sdk.NurigoApp;
 import net.nurigo.sdk.message.model.Message;
@@ -13,22 +17,21 @@ import org.springframework.stereotype.Component;
 @Slf4j
 public class CoolSmsSender implements SmsSender {
     private final DefaultMessageService messageService;
+    private final CoolSmsProperties coolSmsProperties;
 
-    @Value("${coolsms.sender-phone}")
-    private String senderPhone;
-
-    public CoolSmsSender(
-            @Value("${coolsms.api-key}") String apiKey,
-            @Value("${coolsms.api-secret}") String apiSecret,
-            @Value("${coolsms.domain}") String domain
-    ) {
-        this.messageService = NurigoApp.INSTANCE.initialize(apiKey, apiSecret, domain);
+    public CoolSmsSender(CoolSmsProperties coolSmsProperties) {
+        this.coolSmsProperties = coolSmsProperties;
+        this.messageService = NurigoApp.INSTANCE.initialize(
+                coolSmsProperties.getApiKey(),
+                coolSmsProperties.getApiSecret(),
+                coolSmsProperties.getDomain()
+        );
     }
 
     @Override
-    public void send(String to, String text) {
+    public void send(String to, String text) throws Exception {
         Message message = new Message();
-        message.setFrom(senderPhone);
+        message.setFrom(coolSmsProperties.getSenderPhone());
         message.setTo(to);
         message.setText(text);
 
@@ -36,8 +39,7 @@ public class CoolSmsSender implements SmsSender {
             SingleMessageSentResponse response = messageService.sendOne(new SingleMessageSendingRequest(message));
             log.info("CoolSMS 응답: {}", response);
         } catch (Exception e) {
-            log.error("CoolSMS 전송 실패", e);
-            throw new RuntimeException("SMS 전송 실패", e);
+            throw SmsErrorCode.FAIL_SMS_SEND.toException();
         }
     }
 }
