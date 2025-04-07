@@ -2,23 +2,26 @@ package com.noraknorak.sms.domain;
 
 public interface AuthCodeManager {
     /**
-     * 인증코드를 key값과 함께 redis에 저장합니다.
-     * @param phoneNumber key 값
-     * @param code value 값
-     * @param ttl 초 단위 시간
-     */
+ * Saves an authentication code in Redis using the specified phone number as the key.
+ *
+ * @param phoneNumber the phone number used as the key for the authentication code.
+ * @param code the authentication code to be stored.
+ * @param ttl the time-to-live in seconds, after which the code expires.
+ */
     void saveCode(String phoneNumber, String code, long ttl);
 
     /**
-     * 지정한 전화번호에 저장된 인증 코드를 조회합니다.
-     * @param phoneNumber 지정한 전화번호
-     * @return 인증코드
-     */
+ * Retrieves the authentication code associated with the specified phone number.
+ *
+ * @param phoneNumber the phone number for which the authentication code is retrieved
+ * @return the authentication code associated with the phone number
+ */
     String getCode(String phoneNumber);
 
     /**
-     * 지정한 전화번호의 인증번호를 삭제합니다.
-     * @param phoneNumber 지정한 전화번호
-     */
+ * Deletes the authentication code associated with the specified phone number.
+ *
+ * @param phoneNumber the phone number whose authentication code is to be removed from storage
+ */
     void deleteCode(String phoneNumber);
 }

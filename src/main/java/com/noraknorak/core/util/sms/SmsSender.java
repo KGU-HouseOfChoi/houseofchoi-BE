@@ -2,10 +2,11 @@ package com.noraknorak.core.util.sms;
 
 public interface SmsSender {
     /**
-     * 지정된 수신자에게 sms 메시지를 발송합니다
-     * @param to 수신자 전화번호
-     * @param text 전송할 문자 내용
-     * @throws Exception SMS 전송 중 오류가 발생한 경우
-     */
+ * Sends an SMS message to the specified recipient.
+ *
+ * @param to the recipient's phone number
+ * @param text the text content of the SMS message
+ * @throws Exception if an error occurs while sending the SMS
+ */
     void send(String to, String text) throws Exception;
 }

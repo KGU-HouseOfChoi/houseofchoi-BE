@@ -16,6 +16,13 @@ public enum SmsErrorCode implements BaseErrorCode {
 
     private final String message;
 
+    /**
+     * Converts the error code into its corresponding exception.
+     *
+     * <p>Creates and returns a new {@link DomainException} using the HTTP status and error message defined by this error code.</p>
+     *
+     * @return a DomainException representing this error condition
+     */
     @Override
     public Exception toException() {
         return new DomainException(httpStatus, message);

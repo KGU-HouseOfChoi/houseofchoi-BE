@@ -19,6 +19,14 @@ public class CoolSmsSender implements SmsSender {
     private final DefaultMessageService messageService;
     private final CoolSmsProperties coolSmsProperties;
 
+    /**
+     * Constructs a new CoolSmsSender with the specified configuration properties.
+     *
+     * This constructor initializes the underlying message service using the provided CoolSmsProperties,
+     * which must include the API key, API secret, and domain for the CoolSMS service.
+     *
+     * @param coolSmsProperties configuration properties for the CoolSMS service
+     */
     public CoolSmsSender(CoolSmsProperties coolSmsProperties) {
         this.coolSmsProperties = coolSmsProperties;
         this.messageService = NurigoApp.INSTANCE.initialize(
@@ -28,6 +36,18 @@ public class CoolSmsSender implements SmsSender {
         );
     }
 
+    /**
+     * Sends an SMS message using the CoolSMS service.
+     * <p>
+     * Constructs an SMS message with the sender's phone number from configuration and the provided recipient and text.
+     * It attempts to send the message via the messaging service, logging the response on success.
+     * If an error occurs during sending, it logs the failure and throws a custom exception.
+     * </p>
+     *
+     * @param to the recipient's phone number
+     * @param text the SMS message content
+     * @throws Exception if the SMS sending process fails
+     */
     @Override
     public void send(String to, String text) throws Exception {
         Message message = new Message();
