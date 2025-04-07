@@ -3,7 +3,7 @@ package com.noraknorak.core.presentation.swagger;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 
-@Tag(name = "DB", description = "DB 테스트")
+@Tag(name = "Test", description = "각종 테스트용 컨트롤러")
 public interface DBTestSwagger {
     @Operation(
             summary = "DB Test API",
