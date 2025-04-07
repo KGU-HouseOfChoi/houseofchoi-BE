@@ -28,7 +28,7 @@ public class User extends BaseLongIdEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String personalityTag;
 
 }
