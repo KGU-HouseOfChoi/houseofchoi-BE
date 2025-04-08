@@ -1,4 +1,4 @@
-package com.noraknorak.core.config.jwt;
+package com.noraknorak.auth.infrastructure;
 
 import jakarta.annotation.PostConstruct;
 import lombok.Getter;

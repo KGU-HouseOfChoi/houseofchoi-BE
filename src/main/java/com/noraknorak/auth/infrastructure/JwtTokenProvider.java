@@ -1,6 +1,7 @@
-package com.noraknorak.core.config.jwt;
+package com.noraknorak.auth.infrastructure;
 
-import com.noraknorak.core.config.jwt.exception.AuthenticationErrorCode;
+import com.noraknorak.auth.domain.TokenProvider;
+import com.noraknorak.auth.exception.AuthenticationErrorCode;
 import com.noraknorak.user.domain.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;

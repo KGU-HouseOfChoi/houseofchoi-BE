@@ -1,4 +1,4 @@
-package com.noraknorak.core.config.jwt.exception;
+package com.noraknorak.auth.exception;
 
 import com.noraknorak.core.config.exception.DomainException;
 import com.noraknorak.core.config.exception.error.BaseErrorCode;
