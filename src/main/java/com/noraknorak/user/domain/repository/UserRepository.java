@@ -15,6 +15,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
     boolean existsByPhone(String phone);
 
     Optional<User> findByUserCode(String userCode);
+    Optional<User> findByName(String userName);
 
     @Modifying
     @Query("UPDATE User u SET u.role = :role, u.relatedUser = :relatedUser WHERE u.id = :id")
