@@ -1,6 +1,6 @@
 package com.noraknorak.core.infrastructure.filter;
 
-import com.noraknorak.core.config.jwt.JwtTokenProvider;
+import com.noraknorak.auth.infrastructure.JwtTokenProvider;
 import com.noraknorak.core.service.CustomUserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -13,7 +13,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;

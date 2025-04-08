@@ -1,7 +1,8 @@
-package com.noraknorak.core.config.jwt;
+package com.noraknorak.auth.application;
 
 
-import com.noraknorak.core.config.jwt.dto.request.TokenRequest;
+import com.noraknorak.auth.domain.TokenProvider;
+import com.noraknorak.auth.dto.request.TokenRequest;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.exception.UserErrorCode;

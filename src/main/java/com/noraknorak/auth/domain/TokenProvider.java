@@ -1,4 +1,4 @@
-package com.noraknorak.core.config.jwt;
+package com.noraknorak.auth.domain;
 
 import com.noraknorak.user.domain.User;
 

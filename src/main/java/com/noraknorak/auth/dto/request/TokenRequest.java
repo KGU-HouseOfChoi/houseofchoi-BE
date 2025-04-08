@@ -1,4 +1,4 @@
-package com.noraknorak.core.config.jwt.dto.request;
+package com.noraknorak.auth.dto.request;
 
 public record TokenRequest(
         Long userId
