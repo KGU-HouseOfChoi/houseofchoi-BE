@@ -11,10 +11,11 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/sms")
 @RequiredArgsConstructor
-public class SmsController {
+public class SmsController implements SmsSwagger{
 
     private final SmsService smsService;
 
+    @Override
     @PostMapping("/send")
     public ResponseEntity<RestResponse<Boolean>> send(@Valid @RequestBody SmsRequest request) throws Exception {
         smsService.sendSms(request.getPhoneNum());
