@@ -1,6 +1,7 @@
 package com.noraknorak.user.service;
 
 import com.noraknorak.sms.domain.AuthCodeManager;
+import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.value.ResidentRegistrationNumber;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
@@ -8,14 +9,17 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class UserRegisterService {
 
     private final UserRepository userRepository;
@@ -42,6 +46,7 @@ public class UserRegisterService {
         userRepository.save(user);
     }
 
+    // 문자인증 코드 검증
     public boolean verifyCode(UserVerifyCodeRequest userVerifyCodeRequest){
         String storedCode = authCodeManager.getCode(userVerifyCodeRequest.phoneNum());
 
@@ -54,5 +59,29 @@ public class UserRegisterService {
             return true;
         }
         throw UserErrorCode.NOT_EQUAL_CODE.toException();
+    }
+
+    // 부모/자식 연동 코드 검증
+    public User validateUserCode(String code) {
+        return userRepository.findByUserCode(code)
+                .orElseThrow(() -> UserErrorCode.NOT_EQUAL_USER_CODE.toException());
+    }
+
+    // 부모/자식 관계 설정
+    @Transactional
+    public boolean verifyRelatedUser(Long userId, String role, Long relatedUserId){
+        try{
+            if(role.equals("부모")){
+                userRepository.updateUserByUserCode(userId, Role.GUARDIAN, relatedUserId);
+                return true;
+            }else if(role.equals("자식")){
+                userRepository.updateUserByUserCode(userId, Role.SENIOR, relatedUserId);
+                return true;
+            }else{
+                throw UserErrorCode.INVALID_ROLE_ERROR.toException();
+            }
+        } catch (Exception e){
+            throw UserErrorCode.INTERNAL_SERVER_ERROR.toException();
+        }
     }
 }
