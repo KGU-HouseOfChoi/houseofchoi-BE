@@ -2,7 +2,10 @@ package com.noraknorak.user.domain;
 
 import com.noraknorak.core.infrastructure.jpa.entity.BaseLongIdEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Entity
