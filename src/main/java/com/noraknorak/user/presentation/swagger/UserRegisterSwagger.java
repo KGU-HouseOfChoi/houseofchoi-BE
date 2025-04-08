@@ -5,6 +5,7 @@ import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,8 +25,17 @@ public interface UserRegisterSwagger {
     @Operation(
             summary = "문자 인증 API",
             description = "사용자로부터 코드를 받아 인증을 수행합니다.",
-            operationId = "user/verify"
+            operationId = "user/code/verify"
     )
     @ApiErrorCode(UserErrorCode.class)
     ResponseEntity<RestResponse<Boolean>> verifyCode(@Valid @RequestBody UserVerifyCodeRequest userVerifyCodeRequest);
+
+    @Operation(
+            summary = "부모/자식 연동 API",
+            description = "부모 자식간의 연동을 수행합니다. 각자의 인증코드를 입력하여 인증을 수행합니다.",
+            operationId = "/user/relation/verify"
+    )
+    ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
+            @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
+    );
 }
