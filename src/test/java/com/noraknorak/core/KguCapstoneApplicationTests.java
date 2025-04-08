@@ -8,7 +8,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 class KguCapstoneApplicationTests {
 
     @Test
-    @Disabled("test시 DB 연결 문제로 잠시 비활성화")
     void contextLoads() {
     }
 
