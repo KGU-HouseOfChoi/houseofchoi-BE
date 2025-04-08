@@ -10,13 +10,10 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
-import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
-
-import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -70,18 +67,16 @@ public class UserRegisterService {
 
     // 부모/자식 관계 설정
     @Transactional
-    public boolean verifyRelatedUser(Long userId, String role, Long relatedUserId){
+    public void verifyRelatedUser(Long userId, String role, Long relatedUserId){
         try{
-            if(role.equals("부모")){
-                userRepository.updateUserByUserCode(userId, Role.GUARDIAN, relatedUserId);
-                return true;
-            }else if(role.equals("자식")){
-                userRepository.updateUserByUserCode(userId, Role.SENIOR, relatedUserId);
-                return true;
+            if(Role.SENIOR.getName().equals(role)){
+                userRepository.updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);
+            }else if(Role.GUARDIAN.getName().equals(role)){
+                userRepository.updateUserRoleAndRelatedUser(userId, Role.SENIOR, relatedUserId);
             }else{
                 throw UserErrorCode.INVALID_ROLE_ERROR.toException();
             }
-        }catch (DomainException e){
+        } catch (DomainException e) {
             throw e;
         }
         catch (Exception e){

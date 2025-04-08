@@ -156,11 +156,10 @@ public class UserRegisterServiceTest {
             String role = "부모";
 
             // when
-            boolean result = userRegisterService.verifyRelatedUser(id, role, relatedId);
+            userRegisterService.verifyRelatedUser(id, role, relatedId);
 
             // then
-            verify(userRepository).updateUserByUserCode(id, Role.GUARDIAN, relatedId);
-            assertThat(result).isTrue();
+            verify(userRepository).updateUserRoleAndRelatedUser(id, Role.GUARDIAN, relatedId);
         }
 
         @Test
@@ -172,11 +171,10 @@ public class UserRegisterServiceTest {
             String role = "자식";
 
             // when
-            boolean result = userRegisterService.verifyRelatedUser(id, role, relatedId);
+            userRegisterService.verifyRelatedUser(id, role, relatedId);
 
             // then
-            verify(userRepository).updateUserByUserCode(id, Role.SENIOR, relatedId);
-            assertThat(result).isTrue();
+            verify(userRepository).updateUserRoleAndRelatedUser(id, Role.SENIOR, relatedId);
         }
 
         @Test
@@ -202,7 +200,7 @@ public class UserRegisterServiceTest {
             String role = "부모";
 
             doThrow(new RuntimeException("DB Error"))
-                    .when(userRepository).updateUserByUserCode(userId, Role.GUARDIAN, relatedUserId);
+                    .when(userRepository).updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);
 
             // when, then
             assertThatThrownBy(() -> userRegisterService.verifyRelatedUser(userId, role, relatedUserId))

@@ -18,7 +18,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
     @Modifying
     @Query("UPDATE User u SET u.role = :role, u.relatedUser = :relatedUser WHERE u.id = :id")
-    int updateUserByUserCode(
+    int updateUserRoleAndRelatedUser(
             @Param("id") Long id,
             @Param("role") Role role,
             @Param("relatedUser") Long relatedUser
