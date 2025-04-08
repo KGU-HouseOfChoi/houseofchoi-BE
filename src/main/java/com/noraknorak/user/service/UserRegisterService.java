@@ -1,5 +1,6 @@
 package com.noraknorak.user.service;
 
+import com.noraknorak.core.config.exception.DomainException;
 import com.noraknorak.sms.domain.AuthCodeManager;
 import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.value.ResidentRegistrationNumber;
@@ -80,7 +81,10 @@ public class UserRegisterService {
             }else{
                 throw UserErrorCode.INVALID_ROLE_ERROR.toException();
             }
-        } catch (Exception e){
+        }catch (DomainException e){
+            throw e;
+        }
+        catch (Exception e){
             throw UserErrorCode.INTERNAL_SERVER_ERROR.toException();
         }
     }
