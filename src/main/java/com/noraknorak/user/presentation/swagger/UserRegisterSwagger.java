@@ -35,6 +35,7 @@ public interface UserRegisterSwagger {
             description = "부모 자식간의 연동을 수행합니다. 각자의 인증코드를 입력하여 인증을 수행합니다.",
             operationId = "/user/relation/verify"
     )
+    @ApiErrorCode(UserErrorCode.class)
     ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     );
