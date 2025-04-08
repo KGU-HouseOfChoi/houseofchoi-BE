@@ -20,7 +20,11 @@ public class SecurityConfiguration {
     private final ExceptionHandlerFilter exceptionHandlerFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
+    // TODO: 배포 WHITELIST 따로 관리하자...
     private static final String[] WHITELIST = {
+            "/api/v3/api-docs/**",
+            "/api/swagger-ui/**",
+            "/api/swagger-ui.html",
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
