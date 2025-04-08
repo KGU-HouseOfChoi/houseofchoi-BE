@@ -4,12 +4,15 @@ import com.noraknorak.sms.domain.AuthCodeManager;
 import com.noraknorak.user.domain.value.ResidentRegistrationNumber;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
+import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -33,6 +36,7 @@ public class UserRegisterService {
                 .phone(request.phone())
                 .birth(residentRegistrationNumber.extractBirthDate())
                 .gender(residentRegistrationNumber.extractGender())
+                .userCode(UserCodeGenerator.generateUserCode())
                 .build();
 
         userRepository.save(user);

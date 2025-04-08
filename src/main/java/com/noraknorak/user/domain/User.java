@@ -29,7 +29,12 @@ public class User extends BaseLongIdEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(nullable = true)
+    @Column(name = "personality_tag")
     private String personalityTag;
 
+    @Column(name = "user_code", nullable = false, unique = true, updatable = false)
+    private String userCode;
+
+    @Column(name = "related_user")
+    private Long relatedUser;
 }
