@@ -1,6 +1,6 @@
 package com.noraknorak.auth.application;
 
-import com.noraknorak.auth.dto.request.LoginReqeust;
+import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.request.TokenRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.user.domain.User;
@@ -15,8 +15,8 @@ public class LoginService {
     private final UserRepository userRepository;
     private final TokenService tokenService;
 
-    public TokenResponse login(LoginReqeust loginReqeust) {
-        User user = userRepository.findByPhone(loginReqeust.phone())
+    public TokenResponse login(LoginRequest loginRequest) {
+        User user = userRepository.findByPhone(loginRequest.phone())
                 .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
 
         String accessToken = tokenService.provideAccessToken(new TokenRequest(user.getId()));

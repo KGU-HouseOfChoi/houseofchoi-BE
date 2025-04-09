@@ -1,7 +1,7 @@
 package com.noraknorak.auth.presentation;
 
 import com.noraknorak.auth.application.LoginService;
-import com.noraknorak.auth.dto.request.LoginReqeust;
+import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.auth.infrastructure.JwtProperties;
 import com.noraknorak.core.presentation.RestResponse;
@@ -24,8 +24,8 @@ public class LoginController implements LoginSwagger{
 
     @Override
     @PostMapping("/login")
-    public ResponseEntity<RestResponse<TokenResponse>> login(@Valid @RequestBody LoginReqeust loginReqeust) {
-        TokenResponse tokenResponse = loginService.login(loginReqeust);
+    public ResponseEntity<RestResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest loginRequest) {
+        TokenResponse tokenResponse = loginService.login(loginRequest);
         String accessToken = tokenResponse.accessToken();
         long accessCookieMaxAge = jwtProperties.getAccessExpiration() / 1000;
 

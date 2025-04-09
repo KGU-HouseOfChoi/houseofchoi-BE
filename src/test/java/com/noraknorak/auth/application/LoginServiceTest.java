@@ -1,6 +1,6 @@
 package com.noraknorak.auth.application;
 
-import com.noraknorak.auth.dto.request.LoginReqeust;
+import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.request.TokenRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.core.config.exception.DomainException;
@@ -39,7 +39,7 @@ public class LoginServiceTest {
         Long userId = 1L;
         String accessToken = "accessToken";
 
-        LoginReqeust loginReqeust = new LoginReqeust(phone);
+        LoginRequest loginRequest = new LoginRequest(phone);
 
         User user = mock(User.class);
         when(user.getId()).thenReturn(userId);
@@ -48,7 +48,7 @@ public class LoginServiceTest {
         when(tokenService.provideAccessToken(any(TokenRequest.class))).thenReturn(accessToken);
 
         // when
-        TokenResponse tokenResponse = loginService.login(loginReqeust);
+        TokenResponse tokenResponse = loginService.login(loginRequest);
 
         // then
         assertEquals(accessToken, tokenResponse.accessToken());
@@ -63,13 +63,13 @@ public class LoginServiceTest {
     void 로그인_실패_유저_x(){
         // given
         String phone = "01012345678";
-        LoginReqeust loginReqeust = new LoginReqeust(phone);
+        LoginRequest loginRequest = new LoginRequest(phone);
 
         when(userRepository.findByPhone(phone)).thenReturn(Optional.empty());
 
         // when & then
         Assertions.assertThatThrownBy(
-                ()->loginService.login(loginReqeust)
+                ()->loginService.login(loginRequest)
         ).isInstanceOf(DomainException.class)
                 .hasMessage(UserErrorCode.USER_NOT_FOUND.getMessage());
 

@@ -1,6 +1,6 @@
 package com.noraknorak.auth.presentation;
 
-import com.noraknorak.auth.dto.request.LoginReqeust;
+import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.core.config.swagger.ApiErrorCode;
 import com.noraknorak.core.presentation.RestResponse;
@@ -19,5 +19,5 @@ public interface LoginSwagger {
             operationId = "auth/login"
     )
     @ApiErrorCode(UserErrorCode.class)
-    ResponseEntity<RestResponse<TokenResponse>> login(@Valid @RequestBody LoginReqeust loginReqeust);
+    ResponseEntity<RestResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest loginRequest);
 }
