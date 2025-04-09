@@ -32,7 +32,8 @@ public class SecurityConfiguration {
             "/user/**",
             "/sms/**",
             "/redis/**",
-            "/db/**"
+            "/db/**",
+            "/auth/**"
     };
 
     @Bean
