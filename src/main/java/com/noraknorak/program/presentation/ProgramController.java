@@ -24,6 +24,7 @@ public class ProgramController implements ProgramSwagger {
     }
 
     @Override
+    @GetMapping("/{id}")
     public ResponseEntity<RestResponse<ProgramDetailDto>> getProgramById(@PathVariable Long id) {
         return ResponseEntity.ok(new RestResponse<>(programService.findProgramById(id)));
     }
