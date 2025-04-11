@@ -23,9 +23,9 @@ public class ProgramDetailDto {
     private LocalTime startTime;
     private LocalTime endTime;
     private Long price;
-    private MainCategory mainCategory;
-    private SubCategory subCategory;
-    private int headcount;
+    private String mainCategory;
+    private String subCategory;
+    private String headcount;
     private List<String> tags;
     private Long centerId;
     private String centerName;
