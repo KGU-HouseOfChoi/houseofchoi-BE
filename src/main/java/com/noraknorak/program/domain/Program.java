@@ -2,6 +2,8 @@ package com.noraknorak.program.domain;
 
 import com.noraknorak.center.domain.Center;
 import com.noraknorak.core.infrastructure.jpa.entity.BaseLongIdEntity;
+import com.noraknorak.program.domain.Value.MainCategory;
+import com.noraknorak.program.domain.Value.SubCategory;
 import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;

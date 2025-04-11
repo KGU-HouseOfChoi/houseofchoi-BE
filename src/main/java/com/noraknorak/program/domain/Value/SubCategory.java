@@ -1,4 +1,4 @@
-package com.noraknorak.program.domain;
+package com.noraknorak.program.domain.Value;
 
 public enum SubCategory {
     INDOOR,

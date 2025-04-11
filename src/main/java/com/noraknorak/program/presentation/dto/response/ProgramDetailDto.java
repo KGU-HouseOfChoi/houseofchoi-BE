@@ -1,8 +1,8 @@
 package com.noraknorak.program.presentation.dto.response;
 
-import com.noraknorak.program.domain.MainCategory;
+import com.noraknorak.program.domain.Value.MainCategory;
 import com.noraknorak.program.domain.Program;
-import com.noraknorak.program.domain.SubCategory;
+import com.noraknorak.program.domain.Value.SubCategory;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalTime;
