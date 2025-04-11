@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -46,15 +47,13 @@ public class Program extends BaseLongIdEntity {
     private Long price;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private MainCategory mainCategory;
+    private String mainCategory;
 
     @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
-    private SubCategory subCategory;
+    private String subCategory;
 
     @Column(nullable = false)
-    private int headcount;
+    private String headcount;
 
     @ManyToMany
     @JoinTable(
@@ -62,7 +61,8 @@ public class Program extends BaseLongIdEntity {
             joinColumns = @JoinColumn(name = "program_id"),
             inverseJoinColumns = @JoinColumn(name = "tag_id")
     )
-    private List<Tag> tags;
+    @Builder.Default
+    private List<Tag> tags = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_id", nullable = false)

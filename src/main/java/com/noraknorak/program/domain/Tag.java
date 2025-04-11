@@ -1,5 +1,6 @@
 package com.noraknorak.program.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.noraknorak.core.infrastructure.jpa.entity.BaseLongIdEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -22,5 +23,6 @@ public class Tag extends BaseLongIdEntity {
     private String name;
 
     @ManyToMany(mappedBy = "tags")
+    @JsonIgnore
     private List<Program> programs;
 }
