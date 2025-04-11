@@ -1,11 +1,14 @@
 package com.noraknorak.program.presentation.dto.response;
 
+import com.noraknorak.program.domain.Tag;
 import com.noraknorak.program.domain.Value.MainCategory;
 import com.noraknorak.program.domain.Program;
 import com.noraknorak.program.domain.Value.SubCategory;
 import lombok.Builder;
 import lombok.Getter;
 import java.time.LocalTime;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Getter
 @Builder
@@ -23,7 +26,7 @@ public class ProgramDetailDto {
     private MainCategory mainCategory;
     private SubCategory subCategory;
     private int headcount;
-    private String tags;
+    private List<String> tags;
     private Long centerId;
     private String centerName;
 
@@ -44,7 +47,11 @@ public class ProgramDetailDto {
                 .mainCategory(program.getMainCategory())
                 .subCategory(program.getSubCategory())
                 .headcount(program.getHeadcount())
-                .tags(program.getTags())
+                .tags(
+                        program.getTags().stream()
+                        .map(Tag::getName)
+                        .collect(Collectors.toList())
+                )
                 .centerId(center != null ? center.getId() : null)
                 .centerName(center != null ? center.getName() : null)
                 .build();

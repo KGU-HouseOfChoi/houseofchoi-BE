@@ -9,6 +9,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalTime;
+import java.util.List;
 
 @Entity
 @Getter
@@ -55,8 +56,13 @@ public class Program extends BaseLongIdEntity {
     @Column(nullable = false)
     private int headcount;
 
-    @Column(nullable = false)
-    private String tags;
+    @ManyToMany
+    @JoinTable(
+            name = "program_tag",
+            joinColumns = @JoinColumn(name = "program_id"),
+            inverseJoinColumns = @JoinColumn(name = "tag_id")
+    )
+    private List<Tag> tags;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "center_id", nullable = false)
