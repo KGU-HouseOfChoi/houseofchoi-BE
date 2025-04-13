@@ -32,8 +32,8 @@ public class User extends BaseLongIdEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Column(name = "personality_tag")
-    private String personalityTag;
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+    private Personality personality;
 
     @Column(name = "user_code", nullable = false, unique = true, updatable = false)
     private String userCode;
