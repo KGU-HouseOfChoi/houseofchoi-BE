@@ -18,6 +18,14 @@ public class Personality extends BaseLongIdEntity {
     @Column(name = "personality_tags", nullable = false)
     private String tag;
 
+    private String ei;
+
+    private String sn;
+
+    private String tf;
+
+    private String pj;
+
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false, unique = true)
     private User user;
