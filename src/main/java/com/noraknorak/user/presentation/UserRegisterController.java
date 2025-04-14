@@ -1,19 +1,19 @@
 package com.noraknorak.user.presentation;
 
+import com.noraknorak.auth.infrastructure.JwtTokenProvider;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
+import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
 import com.noraknorak.user.service.UserRegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/user")
@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserRegisterController implements UserRegisterSwagger {
 
     private final UserRegisterService userRegisterService;
+    private final JwtTokenProvider jwtTokenProvider;
+
 
     @Override
     @PostMapping("/signup")
@@ -53,6 +55,23 @@ public class UserRegisterController implements UserRegisterSwagger {
                 user.getId()
         );
         return ResponseEntity.ok(new RestResponse<>(true));
+    }
+
+    @Override
+    @GetMapping("/mypage")
+    public ResponseEntity<RestResponse<UserMyPageResponse>> getMyPage(
+            @RequestHeader(value = "Authorization", required = false) String authorizationHeader
+    ) {
+        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN)
+                    .body(RestResponse.fail());
+        }
+
+        String token = authorizationHeader.replace("Bearer ", "");
+        Long userId = jwtTokenProvider.getUserId(token);
+        UserMyPageResponse response = userRegisterService.getMyPageInfo(userId);
+
+        return ResponseEntity.ok(new RestResponse<>(response));
     }
 
 

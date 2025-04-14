@@ -10,6 +10,7 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -82,5 +83,28 @@ public class UserRegisterService {
         catch (Exception e){
             throw UserErrorCode.INTERNAL_SERVER_ERROR.toException();
         }
+    }
+
+    //마이페이지 정보 조회
+    public UserMyPageResponse getMyPageInfo(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+
+        String relatedUserName = null;
+        String relatedUserBirth = null;
+
+        if (user.getRelatedUser() != null) {
+            User related = userRepository.findById(user.getRelatedUser())
+                    .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+
+            relatedUserName = related.getName();
+            relatedUserBirth = related.getBirth();
+        }
+
+        return UserMyPageResponse.builder()
+                .name(user.getName())
+                .relatedUserName(relatedUserName)
+                .relatedUserBirth(relatedUserBirth)
+                .build();
     }
 }
