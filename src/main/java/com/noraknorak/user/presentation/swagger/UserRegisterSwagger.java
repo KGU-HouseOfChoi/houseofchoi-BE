@@ -6,11 +6,15 @@ import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
+import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import io.swagger.v3.oas.annotations.Parameter;
+
 
 @Tag(name = "User", description = "user관련 기능")
 public interface UserRegisterSwagger {
@@ -39,4 +43,16 @@ public interface UserRegisterSwagger {
     ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     );
+
+    @Operation(
+            summary = "마이페이지 조회 API",
+            description = "JWT 토큰을 통해 로그인한 사용자의 마이페이지 정보를 조회합니다.",
+            operationId = "user/mypage"
+    )
+    @ApiErrorCode(UserErrorCode.class)
+    ResponseEntity<RestResponse<UserMyPageResponse>> getMyPage(
+            @Parameter(hidden = true)
+            @RequestHeader("Authorization") String authorizationHeader
+    );
+
 }
