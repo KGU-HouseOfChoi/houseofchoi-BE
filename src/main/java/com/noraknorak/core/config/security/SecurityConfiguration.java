@@ -28,7 +28,6 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/user/**",
             "/test/**",
             "/v1/auth/**",
             "/v1/program/**"
@@ -48,6 +47,7 @@ public class SecurityConfiguration {
                 )
                 .authorizeHttpRequests(auth -> auth
                         .requestMatchers(WHITELIST).permitAll()
+                        .requestMatchers("/v1/user/**").authenticated()
                         .anyRequest().authenticated()
                 )
                 .addFilterBefore(

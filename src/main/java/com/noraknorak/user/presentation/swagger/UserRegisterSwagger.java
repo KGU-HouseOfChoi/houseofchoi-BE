@@ -43,16 +43,4 @@ public interface UserRegisterSwagger {
     ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     );
-
-    @Operation(
-            summary = "마이페이지 조회 API",
-            description = "JWT 토큰을 통해 로그인한 사용자의 마이페이지 정보를 조회합니다.",
-            operationId = "v1/user/mypage"
-    )
-    @ApiErrorCode(UserErrorCode.class)
-    ResponseEntity<RestResponse<UserMyPageResponse>> getMyPage(
-            @Parameter(hidden = true)
-            @RequestHeader("Authorization") String authorizationHeader
-    );
-
 }
