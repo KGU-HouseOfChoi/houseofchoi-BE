@@ -16,7 +16,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("v1/auth")
 @RequiredArgsConstructor
 public class UserRegisterController implements UserRegisterSwagger {
 
@@ -25,7 +25,7 @@ public class UserRegisterController implements UserRegisterSwagger {
 
 
     @Override
-    @PostMapping("/signup")
+    @PostMapping("/sign-up")
     public ResponseEntity<RestResponse<Boolean>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest) {
         userRegisterService.signUp(userSignUpRequest);
         return ResponseEntity.ok(new RestResponse<>(true));

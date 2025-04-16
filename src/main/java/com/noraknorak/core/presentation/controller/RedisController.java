@@ -8,7 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/redis")
+@RequestMapping("/test/redis")
 @RequiredArgsConstructor
 public class RedisController implements RedisSwagger {
     private final RedisTemplate redisTemplate;

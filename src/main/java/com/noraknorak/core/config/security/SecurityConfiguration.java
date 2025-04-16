@@ -28,13 +28,10 @@ public class SecurityConfiguration {
             "/v3/api-docs/**",
             "/swagger-ui/**",
             "/swagger-ui.html",
-            "/health/**",
             "/user/**",
-            "/sms/**",
-            "/redis/**",
-            "/db/**",
-            "/auth/**",
-            "/programs/**"
+            "/test/**",
+            "/v1/auth/**",
+            "/v1/program/**"
     };
 
     @Bean
