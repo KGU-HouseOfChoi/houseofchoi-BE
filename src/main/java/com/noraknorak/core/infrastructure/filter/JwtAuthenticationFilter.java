@@ -13,26 +13,40 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Component;
+import org.springframework.util.AntPathMatcher;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.util.WebUtils;
 
 import java.io.IOException;
+import java.util.List;
 
-//@Component
+@Component
 @RequiredArgsConstructor
 @Log4j2
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtTokenProvider jwtTokenProvider;
     private final CustomUserDetailsService userDetailsService;
+    private static final AntPathMatcher pathMatcher = new AntPathMatcher();
     private static final String ACCESS_TOKEN_COOKIE = "accessToken";
     private static final String AUTHORIZATION_HEADER = "Authorization";
     private static final String BEARER_PREFIX = "Bearer ";
 
+    private static final List<String> EXCLUDED_PATTERNS = List.of(
+            "/test/**",
+            "/v1/auth/**",
+            "/swagger-ui/**",
+            "/v3/api-docs/**",
+            "/api/swagger-ui/**",
+            "/swagger-ui.html",
+            "/api/swagger-ui.html"
+    );
+
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
-        String token = resolveToken(request);
-        return token == null;
+        String path = request.getRequestURI();
+        return EXCLUDED_PATTERNS.stream().anyMatch(pattern -> pathMatcher.match(pattern, path));
     }
 
     @Override

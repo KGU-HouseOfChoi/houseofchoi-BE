@@ -16,7 +16,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-//    private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
     private final ExceptionHandlerFilter exceptionHandlerFilter;
     private final CorsConfigurationSource corsConfigurationSource;
 
@@ -52,11 +52,10 @@ public class SecurityConfiguration {
                 )
                 .addFilterBefore(
                         exceptionHandlerFilter, UsernamePasswordAuthenticationFilter.class
+                )
+                .addFilterBefore(
+                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 );
-        // TODO: JWT 필터 추후 인증/인가 구현시 구현
-//                .addFilterBefore(
-//                        jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
-//                );
 
         return http.build();
     }
