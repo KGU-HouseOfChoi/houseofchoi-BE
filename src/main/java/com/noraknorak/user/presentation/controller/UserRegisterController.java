@@ -1,4 +1,4 @@
-package com.noraknorak.user.presentation;
+package com.noraknorak.user.presentation.controller;
 
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
 import com.noraknorak.core.presentation.RestResponse;
@@ -56,23 +56,5 @@ public class UserRegisterController implements UserRegisterSwagger {
         );
         return ResponseEntity.ok(new RestResponse<>(true));
     }
-
-    @Override
-    @GetMapping("/mypage")
-    public ResponseEntity<RestResponse<UserMyPageResponse>> getMyPage(
-            @RequestHeader(value = "Authorization", required = false) String authorizationHeader
-    ) {
-        if (authorizationHeader == null || !authorizationHeader.startsWith("Bearer ")) {
-            return ResponseEntity.status(HttpStatus.FORBIDDEN)
-                    .body(RestResponse.fail());
-        }
-
-        String token = authorizationHeader.replace("Bearer ", "");
-        Long userId = jwtTokenProvider.getUserId(token);
-        UserMyPageResponse response = userRegisterService.getMyPageInfo(userId);
-
-        return ResponseEntity.ok(new RestResponse<>(response));
-    }
-
 
 }
