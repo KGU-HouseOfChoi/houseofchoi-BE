@@ -10,14 +10,14 @@ public interface RedisSwagger {
     @Operation(
             summary = "Redis Test API - Set",
             description = "현재 레디스가 연결되어 있고 값을 저장할 수 있는지 확인합니다.",
-            operationId = "/redis/set"
+            operationId = "test/redis/set"
     )
     public ResponseEntity<RestResponse<Boolean>> setValue();
 
     @Operation(
             summary = "Redis Test API - Get",
             description = "현재 레디스가 연결되어 있고 값을 가져올 수 있는지 확인합니다.",
-            operationId = "/redis/get"
+            operationId = "test/redis/get"
     )
     public ResponseEntity<RestResponse<Object>> getValue();
 }

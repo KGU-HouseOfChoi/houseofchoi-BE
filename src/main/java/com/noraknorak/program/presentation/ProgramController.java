@@ -11,13 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/programs")
+@RequestMapping("v1/program")
 @RequiredArgsConstructor
 public class ProgramController implements ProgramSwagger {
     private final ProgramService programService;
 
     @Override
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<RestResponse<List<ProgramDetailDto>>> getAllPrograms() {
         List<ProgramDetailDto> programs = programService.findAllPrograms();
         return ResponseEntity.ok(new RestResponse<>(programs));

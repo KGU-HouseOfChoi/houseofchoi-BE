@@ -9,14 +9,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/sms")
+@RequestMapping("v1/auth")
 @RequiredArgsConstructor
 public class SmsController implements SmsSwagger{
 
     private final SmsService smsService;
 
     @Override
-    @PostMapping("/send")
+    @PostMapping("/send-sms")
     public ResponseEntity<RestResponse<Boolean>> send(@Valid @RequestBody SmsRequest request) throws Exception {
         smsService.sendSms(request.getPhoneNum());
         return ResponseEntity.ok(new RestResponse<>(true));

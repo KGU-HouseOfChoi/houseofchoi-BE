@@ -12,14 +12,14 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 
 @RestController
-@RequestMapping("/db")
+@RequestMapping("/test")
 @RequiredArgsConstructor
 public class DatabaseController implements DBTestSwagger {
 
     private final DataSource dataSource;
 
     @Override
-    @GetMapping("/test")
+    @GetMapping("/db")
     public String testDatabaseConnection() {
         try (Connection connection = dataSource.getConnection();
              Statement statement = connection.createStatement();
