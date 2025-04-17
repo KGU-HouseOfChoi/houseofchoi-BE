@@ -3,6 +3,7 @@ package com.noraknorak.auth.presentation;
 import com.noraknorak.auth.application.LoginService;
 import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
+import com.noraknorak.auth.infrastructure.CookieGenerator;
 import com.noraknorak.auth.infrastructure.JwtProperties;
 import com.noraknorak.core.presentation.RestResponse;
 import jakarta.validation.Valid;
@@ -20,23 +21,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 public class LoginController implements LoginSwagger{
     private final LoginService loginService;
-    private final JwtProperties jwtProperties;
+    private final CookieGenerator cookieGenerator;
 
     @Override
     @PostMapping("/login")
     public ResponseEntity<RestResponse<TokenResponse>> login(@Valid @RequestBody LoginRequest loginRequest) {
         TokenResponse tokenResponse = loginService.login(loginRequest);
         String accessToken = tokenResponse.accessToken();
-        long accessCookieMaxAge = jwtProperties.getAccessExpiration() / 1000;
 
-        ResponseCookie cookie = ResponseCookie.from("accessToken", accessToken)
-                .path("/")
-                .httpOnly(true)
-                .secure(true)
-                .sameSite("None")
-                .maxAge(accessCookieMaxAge)
-                .build();
-
+        ResponseCookie cookie = cookieGenerator.generateCookie(accessToken);
         return ResponseEntity
                 .ok()
                 .header(HttpHeaders.SET_COOKIE, cookie.toString())
