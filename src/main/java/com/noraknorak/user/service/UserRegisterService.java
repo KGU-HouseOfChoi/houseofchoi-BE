@@ -14,6 +14,7 @@ import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,11 +27,26 @@ public class UserRegisterService {
 
     //유저 등록
     @Transactional
-    public void signUp(UserSignUpRequest request) {
+    public User signUp(UserSignUpRequest request) {
+        String phoneNum = request.phone();
+
         if (userRepository.existsByPhone(request.phone())) {
-            throw UserErrorCode.MULTIPLE_PHONE_ERROR.toException();
+            String storedCode = authCodeManager.getCode(phoneNum);
+
+            if(storedCode == null) {
+                throw UserErrorCode.CODE_NOT_FOUND.toException();
+            }
+
+            if(!storedCode.equals(request.code())){
+                throw UserErrorCode.NOT_EQUAL_USER_CODE.toException();
+            }
+
+            return userRepository.findByPhone(phoneNum).orElseThrow(
+                    () -> UserErrorCode.USER_NOT_FOUND.toException()
+            );
         }
 
+        // 중복된 번호가 없는 경우 -> 신규 유저 -> 유저 정보 등록 후 로그인
         ResidentRegistrationNumber residentRegistrationNumber
                 = new ResidentRegistrationNumber(request.birth());
 
@@ -43,6 +59,8 @@ public class UserRegisterService {
                 .build();
 
         userRepository.save(user);
+
+        return user;
     }
 
     // 문자인증 코드 검증

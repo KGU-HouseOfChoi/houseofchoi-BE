@@ -12,7 +12,7 @@ public class CookieGenerator {
     public ResponseCookie generateCookie(String content) {
         long accessCookieMaxAge = jwtProperties.getAccessExpiration() / 1000; // 쿠키 유효시간 1시간
 
-        return ResponseCookie.from(content)
+        return ResponseCookie.from("AccessToken", content)
                 .path("/")
                 .httpOnly(true)
                 .secure(true)

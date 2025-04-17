@@ -7,6 +7,7 @@ import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
 import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
+import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
@@ -24,7 +25,7 @@ public interface UserRegisterSwagger {
             operationId = "v1/auth/sign-up"
     )
     @ApiErrorCode(UserErrorCode.class)
-    ResponseEntity<RestResponse<Boolean>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest);
+    ResponseEntity<RestResponse<UserSignUpResponse>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest);
 
     @Operation(
             summary = "문자 인증 API",
