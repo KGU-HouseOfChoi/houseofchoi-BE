@@ -56,24 +56,4 @@ public class UserRegisterController implements UserRegisterSwagger {
         boolean result = userRegisterService.verifyCode(userVerifyCodeRequest);
         return ResponseEntity.ok(new RestResponse<>(result));
     }
-
-    @Override
-    @PostMapping("/relation/verify")
-    public ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
-            @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
-    ) {
-        // 1. 인증 코드 검증
-        User user = userRelationService.validateUserCode(userVerifyRelatedUserRequest.code());
-
-        // 2. 관계 설정하기
-        // 현재 접속 중인 유저가 자식이면 부모의 코드를 활용해서 나를 보호자로 만든다
-        userRelationService.verifyRelatedUser(
-                customUserDetails,
-                userVerifyRelatedUserRequest.role(),
-                user.getId()
-        );
-        return ResponseEntity.ok(new RestResponse<>(true));
-    }
-
 }
