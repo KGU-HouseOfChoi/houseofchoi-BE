@@ -112,6 +112,20 @@ public class UserRelationServiceTest {
                     .isInstanceOf(DomainException.class)
                     .hasMessage(UserErrorCode.INVALID_ROLE_ERROR.getMessage());
         }
+
+        @Test
+        @DisplayName("자기 자신과의 관계 설정 x")
+        void 자기_자신_관계_설정_x(){
+            // given
+            User mockUser = mock(User.class);
+            CustomUserDetails customUserDetails = new CustomUserDetails(mockUser);
+            given(mockUser.getId()).willReturn(USER_ID);
+
+            // when & then
+            assertThatThrownBy(() -> userRelationService.verifyRelatedUser(customUserDetails, Role.SENIOR.getName(), USER_ID))
+                    .isInstanceOf(DomainException.class)
+                    .hasMessage(UserErrorCode.SELF_RELATION_NOT_ALLOWED.getMessage());
+        }
     }
 
 }
