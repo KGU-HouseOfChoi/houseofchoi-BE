@@ -26,6 +26,11 @@ public class UserRelationService {
     @Transactional
     public void verifyRelatedUser(CustomUserDetails customUserDetails, String role, Long relatedUserId){
         Long userId = customUserDetails.getId();
+
+        if (userId.equals(relatedUserId)) {
+            throw UserErrorCode.SELF_RELATION_NOT_ALLOWED.toException();
+        }
+
         try{
             if(Role.SENIOR.getName().equals(role)){
                 userRepository.updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);

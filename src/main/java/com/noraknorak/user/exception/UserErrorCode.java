@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 @RequiredArgsConstructor
 @Getter
 public enum UserErrorCode implements BaseErrorCode {
+    SELF_RELATION_NOT_ALLOWED(HttpStatus.CONFLICT, "자기 자신과의 관계를 설정할 수 없습니다."),
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "유저 정보를 불러오지 못했습니다."),
     NOT_EQUAL_CODE(HttpStatus.BAD_REQUEST, "인증번호를 잘못 입력했습니다."),
     MULTIPLE_PHONE_ERROR(HttpStatus.CONFLICT, "이미 가입된 전화번호입니다."),
