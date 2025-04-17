@@ -31,20 +31,21 @@ public class UserRegisterService {
     public User signUp(UserSignUpRequest request) {
         String phoneNum = request.phone();
 
-        if (userRepository.existsByPhone(request.phone())) {
-            String storedCode = authCodeManager.getCode(phoneNum);
+        // 1. 인증 코드 검증
+        String storedCode = authCodeManager.getCode(phoneNum);
 
-            if(storedCode == null) {
-                throw UserErrorCode.CODE_NOT_FOUND.toException();
-            }
+        if (storedCode == null) {
+            throw UserErrorCode.CODE_NOT_FOUND.toException();
+        }
 
-            if(!storedCode.equals(request.code())){
-                throw UserErrorCode.NOT_EQUAL_USER_CODE.toException();
-            }
+        if (!storedCode.equals(request.code())) {
+            throw UserErrorCode.NOT_EQUAL_CODE.toException();
+        }
 
-            return userRepository.findByPhone(phoneNum).orElseThrow(
-                    UserErrorCode.USER_NOT_FOUND::toException
-            );
+        // 2. 기존 유저인 경우
+        if (userRepository.existsByPhone(phoneNum)) {
+            return userRepository.findByPhone(phoneNum)
+                    .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
         }
 
         // 중복된 번호가 없는 경우 -> 신규 유저 -> 유저 정보 등록 후 로그인
