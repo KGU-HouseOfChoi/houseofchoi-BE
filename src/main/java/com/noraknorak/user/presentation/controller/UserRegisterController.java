@@ -12,6 +12,7 @@ import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
 import com.noraknorak.user.service.UserRegisterService;
+import com.noraknorak.user.service.UserRelationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import okhttp3.Response;
@@ -29,6 +30,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserRegisterController implements UserRegisterSwagger {
 
     private final UserRegisterService userRegisterService;
+    private final UserRelationService userRelationService;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieGenerator cookieGenerator;
 
@@ -62,11 +64,11 @@ public class UserRegisterController implements UserRegisterSwagger {
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     ) {
         // 1. 인증 코드 검증
-        User user = userRegisterService.validateUserCode(userVerifyRelatedUserRequest.code());
+        User user = userRelationService.validateUserCode(userVerifyRelatedUserRequest.code());
 
         // 2. 관계 설정하기
         // 현재 접속 중인 유저가 자식이면 부모의 코드를 활용해서 나를 보호자로 만든다
-        userRegisterService.verifyRelatedUser(
+        userRelationService.verifyRelatedUser(
                 customUserDetails,
                 userVerifyRelatedUserRequest.role(),
                 user.getId()
