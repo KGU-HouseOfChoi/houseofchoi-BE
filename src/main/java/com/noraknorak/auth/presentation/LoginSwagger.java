@@ -14,8 +14,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 @Tag(name="Auth", description = "로그인/회원가입 관련 컨트롤러")
 public interface LoginSwagger {
     @Operation(
-            summary = "로그인 API",
-            description = "전화번호를 입력받아 로그인을 수행한 후, 토큰 값을 저장합니다.",
+            summary = "로그인 API (사용 x)",
+            description = "전화번호를 입력받아 로그인을 수행한 후, 토큰 값을 저장합니다. (사용 x)",
             operationId = "v1/auth/login"
     )
     @ApiErrorCode(UserErrorCode.class)
