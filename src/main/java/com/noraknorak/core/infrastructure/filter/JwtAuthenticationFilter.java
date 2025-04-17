@@ -2,6 +2,7 @@ package com.noraknorak.core.infrastructure.filter;
 
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
 import com.noraknorak.core.service.CustomUserDetailsService;
+import com.noraknorak.user.exception.UserErrorCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
@@ -35,7 +36,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private static final List<String> EXCLUDED_PATTERNS = List.of(
             "/test/**",
-            "/v1/auth/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/api/swagger-ui/**",
@@ -46,6 +46,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getRequestURI();
+        if (path.startsWith("/v1/auth/") && !path.equals("/v1/auth/relation/verify")) {
+            return false;
+        }
         return EXCLUDED_PATTERNS.stream().anyMatch(pattern -> pathMatcher.match(pattern, path));
     }
 
@@ -76,6 +79,10 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private Authentication createAuthentication(String token) {
         Long userId = jwtTokenProvider.getUserId(token);
         UserDetails userDetails = userDetailsService.loadUserById(userId);
+        if (userDetails == null) {
+            // 사용자 없을 경우 예외 던지기
+            throw UserErrorCode.USER_NOT_FOUND.toException();
+        }
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 }

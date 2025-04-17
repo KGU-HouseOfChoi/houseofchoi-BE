@@ -1,6 +1,7 @@
 package com.noraknorak.user.presentation.swagger;
 
 import com.noraknorak.core.config.swagger.ApiErrorCode;
+import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
@@ -12,6 +13,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -28,8 +30,8 @@ public interface UserRegisterSwagger {
     ResponseEntity<RestResponse<UserSignUpResponse>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest);
 
     @Operation(
-            summary = "문자 인증 API",
-            description = "사용자로부터 코드를 받아 인증을 수행합니다.",
+            summary = "문자 인증 API (사용 x)",
+            description = "사용자로부터 코드를 받아 인증을 수행합니다. (사용 안함)",
             operationId = "v1/auth/code/verify"
     )
     @ApiErrorCode(UserErrorCode.class)
@@ -42,6 +44,7 @@ public interface UserRegisterSwagger {
     )
     @ApiErrorCode(UserErrorCode.class)
     ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     );
 }

@@ -1,6 +1,7 @@
 package com.noraknorak.user.service;
 
 import com.noraknorak.core.config.exception.DomainException;
+import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.sms.domain.AuthCodeManager;
 import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
@@ -42,7 +43,7 @@ public class UserRegisterService {
             }
 
             return userRepository.findByPhone(phoneNum).orElseThrow(
-                    () -> UserErrorCode.USER_NOT_FOUND.toException()
+                    UserErrorCode.USER_NOT_FOUND::toException
             );
         }
 
@@ -81,12 +82,13 @@ public class UserRegisterService {
     // 부모/자식 연동 코드 검증
     public User validateUserCode(String code) {
         return userRepository.findByUserCode(code)
-                .orElseThrow(() -> UserErrorCode.NOT_EQUAL_USER_CODE.toException());
+                .orElseThrow(UserErrorCode.NOT_EQUAL_USER_CODE::toException);
     }
 
     // 부모/자식 관계 설정
     @Transactional
-    public void verifyRelatedUser(Long userId, String role, Long relatedUserId){
+    public void verifyRelatedUser(CustomUserDetails customUserDetails, String role, Long relatedUserId){
+        Long userId = customUserDetails.getId();
         try{
             if(Role.SENIOR.getName().equals(role)){
                 userRepository.updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);

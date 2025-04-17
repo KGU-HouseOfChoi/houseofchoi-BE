@@ -2,6 +2,7 @@ package com.noraknorak.user.presentation.controller;
 
 import com.noraknorak.auth.infrastructure.CookieGenerator;
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
+import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
@@ -18,6 +19,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
@@ -56,6 +58,7 @@ public class UserRegisterController implements UserRegisterSwagger {
     @Override
     @PostMapping("/relation/verify")
     public ResponseEntity<RestResponse<Boolean>> verifyRelatedUser(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
             @Valid @RequestBody UserVerifyRelatedUserRequest userVerifyRelatedUserRequest
     ) {
         // 1. 인증 코드 검증
@@ -63,9 +66,8 @@ public class UserRegisterController implements UserRegisterSwagger {
 
         // 2. 관계 설정하기
         // 현재 접속 중인 유저가 자식이면 부모의 코드를 활용해서 나를 보호자로 만든다
-        // TODO: JWT 적용시 Auth토큰 검증하여 현재 본인 정보 얻어오기
         userRegisterService.verifyRelatedUser(
-                userVerifyRelatedUserRequest.id(),
+                customUserDetails,
                 userVerifyRelatedUserRequest.role(),
                 user.getId()
         );

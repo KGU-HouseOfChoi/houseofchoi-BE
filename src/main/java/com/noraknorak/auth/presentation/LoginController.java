@@ -4,7 +4,6 @@ import com.noraknorak.auth.application.LoginService;
 import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.auth.infrastructure.CookieGenerator;
-import com.noraknorak.auth.infrastructure.JwtProperties;
 import com.noraknorak.core.presentation.RestResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
