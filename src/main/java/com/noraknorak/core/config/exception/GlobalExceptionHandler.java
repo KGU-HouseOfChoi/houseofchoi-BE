@@ -30,7 +30,7 @@ public class GlobalExceptionHandler {
         return ResponseEntity
                 .status(ex.getHttpStatus())
                 .body(ErrorResponse.createDomainErrorResponse()
-                        .statusCode(Integer.parseInt(ex.getCode()))
+                        .statusCode(ex.getHttpStatus().value())
                         .exception(ex)
                         .build());
     }
