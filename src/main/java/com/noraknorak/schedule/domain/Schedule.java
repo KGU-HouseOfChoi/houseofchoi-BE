@@ -8,13 +8,18 @@ import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @SuperBuilder
+@Table(
+        name = "schedule",
+        uniqueConstraints = {
+                @UniqueConstraint(columnNames = {"user_id", "program_id"})
+        }
+)
 public class Schedule extends BaseLongIdEntity {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,3 +34,4 @@ public class Schedule extends BaseLongIdEntity {
     @JoinColumn(name = "center_id", nullable = false)
     private Center center;
 }
+
