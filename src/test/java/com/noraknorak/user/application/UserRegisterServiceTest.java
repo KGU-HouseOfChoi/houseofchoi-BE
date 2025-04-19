@@ -1,4 +1,4 @@
-package com.noraknorak.user;
+package com.noraknorak.user.application;
 
 import com.noraknorak.core.config.exception.DomainException;
 import com.noraknorak.sms.domain.AuthCodeManager;
