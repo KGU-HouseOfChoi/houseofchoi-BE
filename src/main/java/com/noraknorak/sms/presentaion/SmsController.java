@@ -18,7 +18,7 @@ public class SmsController implements SmsSwagger{
     @Override
     @PostMapping("/send-sms")
     public ResponseEntity<RestResponse<Boolean>> send(@Valid @RequestBody SmsRequest request) throws Exception {
-        smsService.sendSms(request.getPhoneNum());
+        smsService.sendSms(request.phoneNum());
         return ResponseEntity.ok(new RestResponse<>(true));
     }
 }

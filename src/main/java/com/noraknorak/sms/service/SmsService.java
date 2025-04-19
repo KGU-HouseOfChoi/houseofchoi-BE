@@ -1,6 +1,5 @@
 package com.noraknorak.sms.service;
 
-import com.noraknorak.core.infrastructure.service.RedisService;
 import com.noraknorak.core.util.sms.PhoneNumberUtils;
 import com.noraknorak.core.util.sms.SmsSender;
 import com.noraknorak.sms.domain.AuthCodeGenerator;
