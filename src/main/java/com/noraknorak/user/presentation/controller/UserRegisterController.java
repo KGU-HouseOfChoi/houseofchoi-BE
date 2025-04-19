@@ -2,26 +2,18 @@ package com.noraknorak.user.presentation.controller;
 
 import com.noraknorak.auth.infrastructure.CookieGenerator;
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
-import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
-import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
-import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
 import com.noraknorak.user.service.UserRegisterService;
-import com.noraknorak.user.service.UserRelationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import okhttp3.Response;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -30,7 +22,6 @@ import org.springframework.web.bind.annotation.*;
 public class UserRegisterController implements UserRegisterSwagger {
 
     private final UserRegisterService userRegisterService;
-    private final UserRelationService userRelationService;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieGenerator cookieGenerator;
 

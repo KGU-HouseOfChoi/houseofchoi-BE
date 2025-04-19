@@ -1,6 +1,7 @@
 package com.noraknorak.user.presentation.swagger;
 
 import com.noraknorak.core.config.swagger.ApiErrorCode;
+import com.noraknorak.core.config.swagger.SwaggerRequestBodyExample;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
@@ -17,9 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface UserRegisterSwagger {
     @Operation(
             summary = "회원가입 API",
-            description = "사용자로부터 회원 정보를 입력받아 회원가입을 진행합니다.",
+            description = """
+                    사용자로부터 회원 정보를 받아 로그인 OR 회원가입을 진행합니다.
+                    """,
             operationId = "v1/auth/sign-up"
     )
+    @SwaggerRequestBodyExample(UserSignUpRequest.class)
     @ApiErrorCode(UserErrorCode.class)
     ResponseEntity<RestResponse<UserSignUpResponse>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest);
 
