@@ -106,28 +106,31 @@ public class SwaggerConfiguration {
         return (operation, handlerMethod) -> {
             SwaggerRequestBodyExample annotation = handlerMethod.getMethodAnnotation(SwaggerRequestBodyExample.class);
             if (annotation != null) {
-                Class<?> dtoClass = annotation.value();
-                Map<String, Object> exampleValue = null;
-
-                try {
-                    Method exampleMethod = dtoClass.getMethod("swaggerExample");
-                    exampleValue = (Map<String, Object>) exampleMethod.invoke(null);
-                } catch (Exception e) {
-                    throw new RuntimeException("Swagger example 생성 실패: " + dtoClass.getSimpleName(), e);
-                }
-
-                operation.setRequestBody(new RequestBody()
-                        .description(dtoClass.getSimpleName() + " 예시")
-                        .required(true)
-                        .content(new Content().addMediaType("application/json",
-                                new MediaType()
-                                        .schema(new Schema<>().$ref("#/components/schemas/" + dtoClass.getSimpleName()))
-                                        .addExamples("example", new Example().value(exampleValue))
-                        ))
-                );
+                generateSwaggerRequestBodyExample(operation, annotation.value());
             }
 
             return operation;
         };
+    }
+
+    private void generateSwaggerRequestBodyExample(Operation operation, Class<?> dtoClass) {
+        Map<String, Object> exampleValue = null;
+
+        try {
+            Method exampleMethod = dtoClass.getMethod("swaggerExample");
+            exampleValue = (Map<String, Object>) exampleMethod.invoke(null);
+        } catch (Exception e) {
+            throw new RuntimeException("Swagger example 생성 실패: " + dtoClass.getSimpleName(), e);
+        }
+
+        operation.setRequestBody(new RequestBody()
+                .description(dtoClass.getSimpleName() + " 예시")
+                .required(true)
+                .content(new Content().addMediaType("application/json",
+                        new MediaType()
+                                .schema(new Schema<>().$ref("#/components/schemas/" + dtoClass.getSimpleName()))
+                                .addExamples("example", new Example().value(exampleValue))
+                ))
+        );
     }
 }
