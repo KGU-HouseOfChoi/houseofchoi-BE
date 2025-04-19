@@ -8,7 +8,7 @@ import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
-import com.noraknorak.user.service.UserRegisterService;
+import com.noraknorak.user.application.UserRegisterService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;

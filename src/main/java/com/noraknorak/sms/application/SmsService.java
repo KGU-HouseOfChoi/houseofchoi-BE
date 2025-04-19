@@ -1,4 +1,4 @@
-package com.noraknorak.sms.service;
+package com.noraknorak.sms.application;
 
 import com.noraknorak.core.util.sms.PhoneNumberUtils;
 import com.noraknorak.core.util.sms.SmsSender;

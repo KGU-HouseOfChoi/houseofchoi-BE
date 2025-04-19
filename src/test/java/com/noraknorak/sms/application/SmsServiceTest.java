@@ -2,13 +2,10 @@ package com.noraknorak.sms.application;
 
 import com.noraknorak.core.util.sms.PhoneNumberUtils;
 import com.noraknorak.core.util.sms.SmsSender;
-import com.noraknorak.sms.domain.AuthCodeGenerator;
 import com.noraknorak.sms.domain.AuthCodeManager;
 import com.noraknorak.sms.factory.SmsMessageFactory;
-import com.noraknorak.sms.service.SmsService;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.MockedStatic;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.Mockito.*;

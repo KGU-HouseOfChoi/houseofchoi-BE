@@ -1,7 +1,7 @@
 package com.noraknorak.core.infrastructure.filter;
 
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
-import com.noraknorak.core.service.CustomUserDetailsService;
+import com.noraknorak.core.application.CustomUserDetailsService;
 import com.noraknorak.user.exception.UserErrorCode;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

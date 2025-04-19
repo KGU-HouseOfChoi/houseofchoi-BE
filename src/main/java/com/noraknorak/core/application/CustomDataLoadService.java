@@ -1,4 +1,4 @@
-package com.noraknorak.core.service;
+package com.noraknorak.core.application;
 
 import com.noraknorak.center.domain.Center;
 import com.noraknorak.center.domain.repository.CenterRepository;

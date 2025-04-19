@@ -1,4 +1,4 @@
-package com.noraknorak.user.service;
+package com.noraknorak.user.application;
 
 import com.noraknorak.core.config.exception.DomainException;
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;

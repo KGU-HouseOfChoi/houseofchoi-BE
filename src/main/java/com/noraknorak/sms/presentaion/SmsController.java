@@ -2,7 +2,7 @@ package com.noraknorak.sms.presentaion;
 
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.sms.presentaion.request.SmsRequest;
-import com.noraknorak.sms.service.SmsService;
+import com.noraknorak.sms.application.SmsService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

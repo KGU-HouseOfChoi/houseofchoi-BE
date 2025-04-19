@@ -3,7 +3,6 @@ package com.noraknorak.user.domain.repository;
 import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
 import io.lettuce.core.dynamic.annotation.Param;
-import jakarta.validation.constraints.NotNull;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

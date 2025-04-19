@@ -6,7 +6,6 @@ import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.exception.UserErrorCode;
-import com.noraknorak.user.service.UserRelationService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;

@@ -3,7 +3,7 @@ package com.noraknorak.program.presentation;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.program.presentation.dto.response.ProgramDetailDto;
 import com.noraknorak.program.presentation.swagger.ProgramSwagger;
-import com.noraknorak.program.service.ProgramService;
+import com.noraknorak.program.application.ProgramService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
