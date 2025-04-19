@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/v1/schedule")
 @RequiredArgsConstructor
 public class UserScheduleController implements UserScheduleSwagger {
 

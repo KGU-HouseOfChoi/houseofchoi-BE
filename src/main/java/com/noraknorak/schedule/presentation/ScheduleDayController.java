@@ -2,11 +2,9 @@ package com.noraknorak.schedule.presentation;
 
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
-import com.noraknorak.schedule.presentation.dto.request.ScheduleDayRequest;
 import com.noraknorak.schedule.presentation.dto.response.ScheduleDayDto;
 import com.noraknorak.schedule.presentation.swagger.ScheduleDaySwagger;
 import com.noraknorak.schedule.service.ScheduleDayService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -15,20 +13,20 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import java.util.List;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/v1/schedule")
 @RequiredArgsConstructor
 public class ScheduleDayController implements ScheduleDaySwagger {
 
     private final ScheduleDayService scheduleDayService;
 
     @Override
-    @PostMapping("/my-schedule-day")
+    @GetMapping("/my-schedule-day/{day}")
     public ResponseEntity<RestResponse<List<ScheduleDayDto>>> getMyProgramsByDay(
-            @Valid @RequestBody ScheduleDayRequest request,
+            @PathVariable("day") String day,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
         Long userId = customUserDetails.user().getId();
-        List<ScheduleDayDto> result = scheduleDayService.getSchedulesByDay(userId, request.day());
+        List<ScheduleDayDto> result = scheduleDayService.getSchedulesByDay(userId, day);
         return ResponseEntity.ok(new RestResponse<>(result));
     }
 }

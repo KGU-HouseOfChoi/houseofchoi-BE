@@ -18,7 +18,7 @@ public interface UserScheduleSwagger {
     @Operation(
             summary = "내가 등록한 일정 정보 조회 API",
             description = "로그인한 사용자가 등록한 프로그램 목록과, 각 프로그램의 상세 정보 및 실제 날짜 목록을 조회합니다.",
-            operationId = "v1/schedule/my-detailed"
+            operationId = "v1/schedule/my-schedule"
     )
     @ApiErrorCode(ScheduleErrorCode.class)
     ResponseEntity<RestResponse<List<UserScheduleDto>>> getMyDetailedSchedules(
