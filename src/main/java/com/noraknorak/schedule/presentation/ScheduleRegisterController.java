@@ -2,32 +2,27 @@ package com.noraknorak.schedule.presentation;
 
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
-import com.noraknorak.schedule.presentation.dto.request.ScheduleRegisterRequest;
 import com.noraknorak.schedule.presentation.swagger.ScheduleRegisterSwagger;
 import com.noraknorak.schedule.service.ScheduleRegisterService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/schedules")
+@RequestMapping("/v1/schedule")
 @RequiredArgsConstructor
 public class ScheduleRegisterController implements ScheduleRegisterSwagger {
 
-    private final ScheduleRegisterService scheduleService;
+    private final ScheduleRegisterService scheduleRegisterService;
 
     @Override
-    @PostMapping
+    @PostMapping("/register")
     public ResponseEntity<RestResponse<Boolean>> registerSchedule(
-            @Valid @RequestBody ScheduleRegisterRequest request,
+            @RequestParam("programId") Long programId,
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     ) {
-        scheduleService.registerSchedule(customUserDetails.user().getId(), request.programId());
+        scheduleRegisterService.registerSchedule(customUserDetails.user().getId(), programId);
         return ResponseEntity.ok(new RestResponse<>(true));
     }
 }
