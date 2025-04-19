@@ -1,4 +1,4 @@
-package com.noraknorak.user;
+package com.noraknorak.user.application;
 
 import com.noraknorak.core.config.exception.DomainException;
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;
@@ -14,7 +14,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Optional;
 

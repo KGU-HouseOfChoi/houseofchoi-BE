@@ -18,7 +18,7 @@ public class UserRelationService {
 
     // 부모/자식 연동 코드 검증
     public User validateUserCode(String code) {
-        return userRepository.findByUserCode(code)
+        return userRepository.findByUserCode(code.toLowerCase())
                 .orElseThrow(UserErrorCode.NOT_EQUAL_USER_CODE::toException);
     }
 
