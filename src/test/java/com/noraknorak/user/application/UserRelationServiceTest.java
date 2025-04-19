@@ -32,8 +32,8 @@ public class UserRelationServiceTest {
 
     private final Long USER_ID = 1L;
     private final Long RELATED_USER_ID = 2L;
-    private final String VALID_USER_CODE = "validCode";
-    private final String INVALID_USER_CODE = "invalidCode";
+    private final String VALID_USER_CODE = "validcode";
+    private final String INVALID_USER_CODE = "invalidcode";
 
     @Nested
     class 부모_자식_연동_검증 {
@@ -47,6 +47,21 @@ public class UserRelationServiceTest {
 
             // when
             User result = userRelationService.validateUserCode(VALID_USER_CODE);
+
+            // then
+            assertThat(result).isEqualTo(mockUser);
+        }
+
+        @Test
+        @DisplayName("유효한 부모/자식 코드 검증 - 대문자 입력시")
+        void 부모_자식_코드_검증_정상_대문자입력(){
+            // given
+            User mockUser = mock(User.class);
+            given(userRepository.findByUserCode(VALID_USER_CODE.toLowerCase()))
+                    .willReturn(Optional.of(mockUser));
+
+            // when
+            User result = userRelationService.validateUserCode(VALID_USER_CODE.toLowerCase());
 
             // then
             assertThat(result).isEqualTo(mockUser);
