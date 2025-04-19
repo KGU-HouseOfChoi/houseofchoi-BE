@@ -1,4 +1,4 @@
-package com.noraknorak.center.service;
+package com.noraknorak.center.application;
 
 import com.noraknorak.center.domain.repository.CenterRepository;
 import lombok.RequiredArgsConstructor;

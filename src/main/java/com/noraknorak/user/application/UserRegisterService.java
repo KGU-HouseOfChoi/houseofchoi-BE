@@ -1,9 +1,6 @@
-package com.noraknorak.user.service;
+package com.noraknorak.user.application;
 
-import com.noraknorak.core.config.exception.DomainException;
-import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.sms.domain.AuthCodeManager;
-import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.domain.value.ResidentRegistrationNumber;
@@ -11,11 +8,9 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
-import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -5,7 +5,7 @@ import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserVerifyRelatedUserRequest;
 import com.noraknorak.user.presentation.swagger.UserRelationSwagger;
-import com.noraknorak.user.service.UserRelationService;
+import com.noraknorak.user.application.UserRelationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

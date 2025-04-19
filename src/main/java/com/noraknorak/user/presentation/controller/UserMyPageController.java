@@ -4,7 +4,7 @@ import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
 import com.noraknorak.user.presentation.swagger.UserMyPageSwagger;
-import com.noraknorak.user.service.UserMyPageService;
+import com.noraknorak.user.application.UserMyPageService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

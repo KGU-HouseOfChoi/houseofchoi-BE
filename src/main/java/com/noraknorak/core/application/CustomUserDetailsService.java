@@ -1,4 +1,4 @@
-package com.noraknorak.core.service;
+package com.noraknorak.core.application;
 
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.user.domain.User;

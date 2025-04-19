@@ -4,7 +4,6 @@ import com.noraknorak.core.config.swagger.ApiErrorCode;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.sms.exception.SmsErrorCode;
 import com.noraknorak.sms.presentaion.request.SmsRequest;
-import com.noraknorak.user.exception.UserErrorCode;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;

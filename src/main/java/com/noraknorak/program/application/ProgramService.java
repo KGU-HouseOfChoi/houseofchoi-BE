@@ -1,4 +1,4 @@
-package com.noraknorak.program.service;
+package com.noraknorak.program.application;
 
 import com.noraknorak.program.domain.Program;
 import com.noraknorak.program.domain.repository.ProgramRepository;

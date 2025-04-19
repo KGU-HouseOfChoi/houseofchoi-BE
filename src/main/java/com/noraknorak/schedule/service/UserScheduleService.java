@@ -1,6 +1,5 @@
 package com.noraknorak.schedule.service;
 
-import com.noraknorak.program.domain.repository.ProgramRepository;
 import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.schedule.domain.repository.ScheduleRepository;
 import com.noraknorak.schedule.presentation.dto.response.UserScheduleDto;
@@ -16,7 +15,6 @@ import java.util.List;
 @RequiredArgsConstructor
 public class UserScheduleService {
 
-    private final ProgramRepository programRepository;
     private final ScheduleRepository scheduleRepository;
 
     @Transactional

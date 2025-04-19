@@ -5,7 +5,6 @@ import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.presentation.dto.response.UserMyPageResponse;
-import com.noraknorak.user.service.UserMyPageService;
 
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Nested;
