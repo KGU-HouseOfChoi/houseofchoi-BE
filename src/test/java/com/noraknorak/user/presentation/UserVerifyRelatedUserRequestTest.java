@@ -25,7 +25,7 @@ public class UserVerifyRelatedUserRequestTest {
     }
 
     @Test
-    @DisplayName("정상 입력이 들어온 경우")
+    @DisplayName("UserVerifyRelatedUserRequestTest - 정상 입력이 들어온 경우")
     void 정상_입력(){
         // given
         UserVerifyRelatedUserRequest request = new UserVerifyRelatedUserRequest(TEST_ROLE, TEST_CODE);
@@ -38,6 +38,7 @@ public class UserVerifyRelatedUserRequestTest {
     }
 
     @Nested
+    @DisplayName("UserVerifyRelatedUserRequestTest - 역할 오류")
     class 역할_오류{
 
         @Test
@@ -71,6 +72,7 @@ public class UserVerifyRelatedUserRequestTest {
     }
     
     @Nested
+    @DisplayName("UserVerifyRelatedUserRequestTest - 입력 코드 오류")
     class 유저코드_오류{
         
         @Test
