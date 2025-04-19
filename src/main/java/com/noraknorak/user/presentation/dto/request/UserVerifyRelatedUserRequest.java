@@ -3,6 +3,8 @@ package com.noraknorak.user.presentation.dto.request;
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotNull;
 
+import java.util.Map;
+
 public record UserVerifyRelatedUserRequest(
 
         @NotNull(message = "부모/자식 정보를 입력해 주세요")
@@ -13,4 +15,10 @@ public record UserVerifyRelatedUserRequest(
         @Schema(description = "6자리 글자")
         String code
 ) {
+        public static Map<String, Object> swaggerExample(){
+                return Map.of(
+                        "role", "부모",
+                        "code", "45a2u9"
+                );
+        }
 }
