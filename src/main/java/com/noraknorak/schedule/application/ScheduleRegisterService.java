@@ -28,10 +28,11 @@ public class ScheduleRegisterService {
             throw ScheduleErrorCode.SCHEDULE_ALREADY_EXISTS.toException();
         }
 
+        User user = getUser(userId);
         Program program = getProgram(programId);
 
         Schedule schedule = Schedule.builder()
-                .user(getUser(userId))
+                .user(user)
                 .program(program)
                 .center(program.getCenter())
                 .build();
@@ -41,11 +42,11 @@ public class ScheduleRegisterService {
 
     private User getUser(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+                .orElseThrow(() -> ScheduleErrorCode.USER_NOT_FOUND.toException());
     }
 
     private Program getProgram(Long programId) {
         return programRepository.findById(programId)
-                .orElseThrow(() -> ProgramErrorCode.PROGRAM_NOT_FOUND.toException());
+                .orElseThrow(() -> ScheduleErrorCode.PROGRAM_NOT_FOUND.toException());
     }
 }

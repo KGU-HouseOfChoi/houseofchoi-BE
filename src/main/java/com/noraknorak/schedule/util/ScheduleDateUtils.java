@@ -6,6 +6,7 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class ScheduleDateUtils {
 
@@ -14,13 +15,13 @@ public class ScheduleDateUtils {
         LocalDate endDate = today.plusMonths(1);
 
         // Program 객체에서 요일 문자열 가져오기
-        List<String> rawDays = List.of(
+        List<String> rawDays = Stream.of(
                 program.getFirDay(),
                 program.getSecDay(),
                 program.getThrDay(),
                 program.getFouDay(),
                 program.getFivDay()
-        );
+        ).filter(Objects::nonNull).collect(Collectors.toList());    // null 값 오류 방지
 
         // 유효한 DayOfWeek만 추출
         Set<DayOfWeek> targetDays = rawDays.stream()

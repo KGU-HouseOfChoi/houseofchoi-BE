@@ -1,6 +1,8 @@
 package com.noraknorak.schedule.application;
 
+import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.schedule.domain.repository.ScheduleRepository;
+import com.noraknorak.schedule.exception.ScheduleErrorCode;
 import com.noraknorak.schedule.presentation.dto.response.UserScheduleDto;
 import com.noraknorak.schedule.util.ScheduleDateUtils;
 import jakarta.transaction.Transactional;
@@ -18,6 +20,12 @@ public class UserScheduleService {
 
     @Transactional
     public List<UserScheduleDto> getDetailedSchedulesForUser(Long userId) {
+        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+
+        if(schedules == null || schedules.isEmpty()) {
+            throw ScheduleErrorCode.SCHEDULE_NOT_FOUND.toException();
+        }
+
         return scheduleRepository.findByUserId(userId)
                 .stream()
                 .map(schedule -> {
