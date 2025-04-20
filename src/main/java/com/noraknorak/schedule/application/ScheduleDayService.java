@@ -9,6 +9,7 @@ import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -19,8 +20,14 @@ public class ScheduleDayService {
 
     @Transactional
     public List<ScheduleDayDto> getSchedulesByDay(Long userId, String dayKorean) {
+        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+
+        if(schedules == null || schedules.isEmpty()) {
+            throw ScheduleErrorCode.SCHEDULE_NOT_FOUND.toException();
+        }
+
         List<ScheduleDayDto> filtered = filteringScheduleByDays(
-                scheduleRepository.findByUserId(userId),
+                schedules,
                 dayKorean
         );
 
@@ -35,9 +42,8 @@ public class ScheduleDayService {
         return schedules.stream()
                 .filter(schedule -> {
                     Program p = schedule.getProgram();
-                    return List.of(
-                            p.getFirDay(), p.getSecDay(), p.getThrDay(),
-                            p.getFouDay(), p.getFivDay()
+                    return Arrays.asList(
+                            p.getFirDay(), p.getSecDay(), p.getThrDay(), p.getFouDay(), p.getFivDay()
                     ).contains(dayKorean);
                 })
                 .map(ScheduleDayDto::from)
