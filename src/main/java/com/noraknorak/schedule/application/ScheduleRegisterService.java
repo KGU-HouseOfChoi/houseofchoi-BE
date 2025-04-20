@@ -1,4 +1,4 @@
-package com.noraknorak.schedule.service;
+package com.noraknorak.schedule.application;
 
 import com.noraknorak.program.domain.Program;
 import com.noraknorak.program.domain.repository.ProgramRepository;
@@ -28,18 +28,24 @@ public class ScheduleRegisterService {
             throw ScheduleErrorCode.SCHEDULE_ALREADY_EXISTS.toException();
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
-
-        Program program = programRepository.findById(programId)
-                .orElseThrow(() -> ProgramErrorCode.PROGRAM_NOT_FOUND.toException());
+        Program program = getProgram(programId);
 
         Schedule schedule = Schedule.builder()
-                .user(user)
+                .user(getUser(userId))
                 .program(program)
                 .center(program.getCenter())
                 .build();
 
         scheduleRepository.save(schedule);
+    }
+
+    private User getUser(Long userId) {
+        return userRepository.findById(userId)
+                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+    }
+
+    private Program getProgram(Long programId) {
+        return programRepository.findById(programId)
+                .orElseThrow(() -> ProgramErrorCode.PROGRAM_NOT_FOUND.toException());
     }
 }

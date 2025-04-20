@@ -4,7 +4,7 @@ import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.schedule.presentation.dto.response.ScheduleDayDto;
 import com.noraknorak.schedule.presentation.swagger.ScheduleDaySwagger;
-import com.noraknorak.schedule.service.ScheduleDayService;
+import com.noraknorak.schedule.application.ScheduleDayService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

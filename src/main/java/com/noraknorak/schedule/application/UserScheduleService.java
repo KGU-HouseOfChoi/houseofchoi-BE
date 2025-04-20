@@ -1,6 +1,5 @@
-package com.noraknorak.schedule.service;
+package com.noraknorak.schedule.application;
 
-import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.schedule.domain.repository.ScheduleRepository;
 import com.noraknorak.schedule.presentation.dto.response.UserScheduleDto;
 import com.noraknorak.schedule.util.ScheduleDateUtils;
@@ -19,9 +18,8 @@ public class UserScheduleService {
 
     @Transactional
     public List<UserScheduleDto> getDetailedSchedulesForUser(Long userId) {
-        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
-
-        return schedules.stream()
+        return scheduleRepository.findByUserId(userId)
+                .stream()
                 .map(schedule -> {
                     List<LocalDate> dates = ScheduleDateUtils.extractProgramDates(schedule.getProgram());
                     return UserScheduleDto.from(schedule, dates);
