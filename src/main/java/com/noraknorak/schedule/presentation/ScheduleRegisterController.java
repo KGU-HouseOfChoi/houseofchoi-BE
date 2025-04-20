@@ -3,7 +3,7 @@ package com.noraknorak.schedule.presentation;
 import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.schedule.presentation.swagger.ScheduleRegisterSwagger;
-import com.noraknorak.schedule.service.ScheduleRegisterService;
+import com.noraknorak.schedule.application.ScheduleRegisterService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

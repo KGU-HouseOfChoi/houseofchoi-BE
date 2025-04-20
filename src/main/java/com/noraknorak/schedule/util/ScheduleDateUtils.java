@@ -1,6 +1,5 @@
 package com.noraknorak.schedule.util;
 
-import com.noraknorak.schedule.util.DayOfWeekConverter;
 import com.noraknorak.program.domain.Program;
 
 import java.time.DayOfWeek;

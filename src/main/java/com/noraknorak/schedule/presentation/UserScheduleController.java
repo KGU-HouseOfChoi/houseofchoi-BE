@@ -4,7 +4,7 @@ import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.schedule.presentation.dto.response.UserScheduleDto;
 import com.noraknorak.schedule.presentation.swagger.UserScheduleSwagger;
-import com.noraknorak.schedule.service.UserScheduleService;
+import com.noraknorak.schedule.application.UserScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

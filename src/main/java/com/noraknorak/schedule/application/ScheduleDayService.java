@@ -1,4 +1,4 @@
-package com.noraknorak.schedule.service;
+package com.noraknorak.schedule.application;
 
 import com.noraknorak.program.domain.Program;
 import com.noraknorak.schedule.domain.Schedule;
@@ -19,9 +19,20 @@ public class ScheduleDayService {
 
     @Transactional
     public List<ScheduleDayDto> getSchedulesByDay(Long userId, String dayKorean) {
-        List<Schedule> schedules = scheduleRepository.findByUserId(userId);
+        List<ScheduleDayDto> filtered = filteringScheduleByDays(
+                scheduleRepository.findByUserId(userId),
+                dayKorean
+        );
 
-        List<ScheduleDayDto> filtered = schedules.stream()
+        if (filtered.isEmpty()) {
+            throw ScheduleErrorCode.NO_PROGRAM_FOR_DAY.toException();
+        }
+
+        return filtered;
+    }
+
+    private List<ScheduleDayDto> filteringScheduleByDays(List<Schedule> schedules, String dayKorean) {
+        return schedules.stream()
                 .filter(schedule -> {
                     Program p = schedule.getProgram();
                     return List.of(
@@ -31,12 +42,5 @@ public class ScheduleDayService {
                 })
                 .map(ScheduleDayDto::from)
                 .toList();
-
-        if (filtered.isEmpty()) {
-            throw ScheduleErrorCode.NO_PROGRAM_FOR_DAY.toException();
-        }
-
-        return filtered;
     }
-
 }
