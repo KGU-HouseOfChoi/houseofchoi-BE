@@ -51,11 +51,11 @@ jobs:
           name: backend-jar
           path: build/libs/*.jar
 
-      - name: `.env` 복원 및 업로드
+      - name: .env 복원 및 업로드
         run: |
           echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
 
-      - name: `.env` 파일 아티팩트로 업로드
+      - name: .env 파일 아티팩트로 업로드
         uses: actions/upload-artifact@v4
         with:
           name: env-file
