@@ -88,6 +88,19 @@ jobs:
           source: "docker-compose.yaml"
           target: "~/backend"
 
+      - name: `.env` 파일 복원
+        run: |
+          echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
+
+      - name: `.env` 서버 전송
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          source: ".env"
+          target: "~/backend"
+
       - name: 서버에서 `docker-compose` 실행
         uses: appleboy/ssh-action@master
         with:
@@ -96,9 +109,9 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             cd ~/backend
-            docker-compose pull
-            docker-compose down
-            docker-compose up -d --force-recreate --remove-orphans
+            docker-compose --env-file .env pull
+            docker-compose --env-file .env down
+            docker-compose --env-file .env up -d --force-recreate --remove-orphans
             docker image prune -f
 
       - name: 서버에서 `docker-compose.yml` 파일 삭제
