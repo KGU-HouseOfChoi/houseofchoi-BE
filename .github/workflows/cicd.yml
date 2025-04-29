@@ -118,4 +118,3 @@ jobs:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           script: |
             rm -f ~/backend/docker-compose.yaml
-            rm -f ~/backend/.env
