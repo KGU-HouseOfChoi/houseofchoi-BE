@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - dev
-
   workflow_dispatch:
 
 jobs:
@@ -52,13 +51,20 @@ jobs:
           name: backend-jar
           path: build/libs/*.jar
 
-#      - name: 테스트 실행
-#        run: ./gradlew test
+      - name: `.env` 복원 및 업로드
+        run: |
+          echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
+
+      - name: `.env` 파일 아티팩트로 업로드
+        uses: actions/upload-artifact@v4
+        with:
+          name: env-file
+          path: .env
 
   cd:
     name: Deploy with Docker
     runs-on: ubuntu-latest
-    needs: ci  # 🚀 CI가 완료된 후 실행
+    needs: ci
 
     steps:
       - name: 코드 체크아웃
@@ -70,6 +76,12 @@ jobs:
           name: backend-jar
           path: build/libs
 
+      - name: `.env` 파일 다운로드
+        uses: actions/download-artifact@v4
+        with:
+          name: env-file
+          path: .
+
       - name: Docker 로그인
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
@@ -79,7 +91,7 @@ jobs:
       - name: Docker Hub에 Push
         run: docker push ${{ secrets.DOCKER_USERNAME }}/${{ secrets.DOCKER_IMAGENAME }}:latest
 
-      - name: 서버에 `docker-compose.yml` 파일 전송
+      - name: 서버에 docker-compose.yml 전송
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -88,11 +100,7 @@ jobs:
           source: "docker-compose.yaml"
           target: "~/backend"
 
-      - name: `.env` 파일 복원
-        run: |
-          echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
-
-      - name: `.env` 서버 전송
+      - name: `.env` 파일 서버 전송
         uses: appleboy/scp-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -101,7 +109,7 @@ jobs:
           source: ".env"
           target: "~/backend"
 
-      - name: 서버에서 `docker-compose` 실행
+      - name: 서버에서 docker-compose 실행
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
@@ -114,7 +122,7 @@ jobs:
             docker-compose --env-file .env up -d --force-recreate --remove-orphans
             docker image prune -f
 
-      - name: 서버에서 `docker-compose.yml` 파일 삭제
+      - name: 서버에서 docker-compose.yml 삭제
         uses: appleboy/ssh-action@master
         with:
           host: ${{ secrets.HOST }}
