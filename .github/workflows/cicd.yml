@@ -51,16 +51,6 @@ jobs:
           name: backend-jar
           path: build/libs/*.jar
 
-      - name: .env 복원 및 업로드
-        run: |
-          echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
-
-      - name: .env 파일 아티팩트로 업로드
-        uses: actions/upload-artifact@v4
-        with:
-          name: env-file
-          path: .env
-
   cd:
     name: Deploy with Docker
     runs-on: ubuntu-latest
@@ -76,11 +66,9 @@ jobs:
           name: backend-jar
           path: build/libs
 
-      - name: Restore and upload .env
-        uses: actions/download-artifact@v4
-        with:
-          name: env-file
-          path: .env
+      - name: .env 복원 및 업로드
+        run: |
+          echo "${{ secrets.DOCKER_ENV_B64 }}" | base64 --decode > .env
 
       - name: Docker 로그인
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
