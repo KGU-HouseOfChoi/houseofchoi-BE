@@ -76,7 +76,7 @@ jobs:
           name: backend-jar
           path: build/libs
 
-      - name: `.env` 파일 다운로드
+      - name: Restore and upload .env
         uses: actions/download-artifact@v4
         with:
           name: env-file
