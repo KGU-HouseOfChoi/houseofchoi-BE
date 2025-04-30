@@ -8,6 +8,7 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.response.UserSignUpResult;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +24,7 @@ public class UserRegisterService {
 
     //유저 등록
     @Transactional
-    public User signUp(UserSignUpRequest request) {
+    public UserSignUpResult signUp(UserSignUpRequest request) {
         String phoneNum = request.phone();
 
         // 1. 인증 코드 검증
@@ -38,26 +39,29 @@ public class UserRegisterService {
         }
 
         // 2. 기존 유저인 경우
+        User user;
+        boolean isNewUser;
+
         if (userRepository.existsByPhone(phoneNum)) {
-            return userRepository.findByPhone(phoneNum)
+            user = userRepository.findByPhone(phoneNum)
                     .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
+            isNewUser = false;
+        } else {
+            ResidentRegistrationNumber rrn = new ResidentRegistrationNumber(request.birth());
+
+            user = User.builder()
+                    .name(request.name())
+                    .phone(request.phone())
+                    .birth(rrn.extractBirthDate())
+                    .gender(rrn.extractGender())
+                    .userCode(UserCodeGenerator.generateUserCode())
+                    .build();
+
+            userRepository.save(user);
+            isNewUser = true;
         }
 
-        // 중복된 번호가 없는 경우 -> 신규 유저 -> 유저 정보 등록 후 로그인
-        ResidentRegistrationNumber residentRegistrationNumber
-                = new ResidentRegistrationNumber(request.birth());
-
-        User user = User.builder()
-                .name(request.name())
-                .phone(request.phone())
-                .birth(residentRegistrationNumber.extractBirthDate())
-                .gender(residentRegistrationNumber.extractGender())
-                .userCode(UserCodeGenerator.generateUserCode())
-                .build();
-
-        userRepository.save(user);
-
-        return user;
+        return new UserSignUpResult(user, isNewUser);
     }
 
     // 문자인증 코드 검증

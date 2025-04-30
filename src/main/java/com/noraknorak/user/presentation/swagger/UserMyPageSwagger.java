@@ -21,4 +21,15 @@ public interface UserMyPageSwagger {
     ResponseEntity<RestResponse<UserMyPageResponse>> getMyPage(
             @AuthenticationPrincipal CustomUserDetails customUserDetails
     );
+
+    @Operation(
+            summary = "로그인한 유저 이름 조회 API",
+            description = "JWT 토큰을 통해 로그인한 사용자의 이름만 조회합니다.",
+            operationId = "v1/user/name"
+    )
+    @ApiErrorCode(UserErrorCode.class)
+    ResponseEntity<RestResponse<String>> getUserName(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    );
+
 }

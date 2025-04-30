@@ -7,6 +7,7 @@ import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
+import com.noraknorak.user.presentation.dto.response.UserSignUpResult;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
 import com.noraknorak.user.application.UserRegisterService;
 import jakarta.validation.Valid;
@@ -28,11 +29,14 @@ public class UserRegisterController implements UserRegisterSwagger {
     @Override
     @PostMapping("/sign-up")
     public ResponseEntity<RestResponse<UserSignUpResponse>> signUp(@Valid @RequestBody UserSignUpRequest userSignUpRequest) {
-        User user = userRegisterService.signUp(userSignUpRequest);
+        UserSignUpResult result = userRegisterService.signUp(userSignUpRequest);
+
+        User user = result.user();
+        boolean isNewUser = result.isNewUser();
 
         String accessToken = jwtTokenProvider.provideAccessToken(user);
 
-        UserSignUpResponse response = UserSignUpResponse.from(accessToken, user);
+        UserSignUpResponse response = UserSignUpResponse.from(accessToken, user, isNewUser);
 
         ResponseCookie cookie = cookieGenerator.generateCookie(accessToken);
 
