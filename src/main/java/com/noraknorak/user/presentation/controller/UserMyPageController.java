@@ -28,4 +28,14 @@ public class UserMyPageController implements UserMyPageSwagger {
 
         return ResponseEntity.ok(new RestResponse<>(response));
     }
+
+    @Override
+    @GetMapping("/name")
+    public ResponseEntity<RestResponse<String>> getUserName(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    ) {
+        String name = userMyPageService.getUserName(customUserDetails);
+        return ResponseEntity.ok(new RestResponse<>(name));
+    }
+
 }

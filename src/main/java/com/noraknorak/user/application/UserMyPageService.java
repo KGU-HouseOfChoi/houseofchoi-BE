@@ -38,4 +38,12 @@ public class UserMyPageService {
                 .relatedUserBirth(relatedUserBirth)
                 .build();
     }
+    //유저 이름 반환
+    public String getUserName(CustomUserDetails customUserDetails) {
+        Long userId = customUserDetails.user().getId();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+        return user.getName();
+    }
+
 }

@@ -10,9 +10,10 @@ public record UserSignUpResponse(
         String birth,
         String gender,
         String userCode,
-        Role role
+        Role role,
+        boolean isNewUser
 ) {
-    public static UserSignUpResponse from(String accessToken, User user) {
+    public static UserSignUpResponse from(String accessToken, User user, boolean isNewUser) {
         return new UserSignUpResponse(
                 accessToken,
                 user.getId(),
@@ -20,7 +21,8 @@ public record UserSignUpResponse(
                 user.getBirth(),
                 user.getGender(),
                 user.getUserCode(),
-                user.getRole()
+                user.getRole(),
+                isNewUser
         );
     }
 }
