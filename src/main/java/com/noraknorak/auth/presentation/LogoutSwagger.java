@@ -1,10 +1,12 @@
 package com.noraknorak.auth.presentation;
 
 import com.noraknorak.core.config.swagger.ApiErrorCode;
+import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 
 @Tag(name = "Auth", description = "로그인/회원가입 관련 컨트롤러")
 public interface LogoutSwagger {
@@ -14,5 +16,7 @@ public interface LogoutSwagger {
             operationId = "v1/auth/logout"
     )
     @ApiErrorCode({})
-    ResponseEntity<RestResponse<Void>> logout();
+    ResponseEntity<RestResponse<Void>> logout(
+            @AuthenticationPrincipal CustomUserDetails customUserDetails
+    );
 }

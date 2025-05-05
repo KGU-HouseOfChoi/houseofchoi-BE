@@ -1,5 +1,6 @@
 package com.noraknorak.user.presentation.controller;
 
+import com.noraknorak.auth.application.RefreshTokenService;
 import com.noraknorak.auth.infrastructure.CookieGenerator;
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
 import com.noraknorak.core.presentation.RestResponse;
@@ -25,6 +26,7 @@ public class UserRegisterController implements UserRegisterSwagger {
     private final UserRegisterService userRegisterService;
     private final JwtTokenProvider jwtTokenProvider;
     private final CookieGenerator cookieGenerator;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     @PostMapping("/sign-up")
@@ -37,10 +39,12 @@ public class UserRegisterController implements UserRegisterSwagger {
         String accessToken = jwtTokenProvider.provideAccessToken(user);
         String refreshToken = jwtTokenProvider.provideRefreshToken(user);
 
+        refreshTokenService.save(user.getId(), refreshToken);
+
         UserSignUpResponse response = UserSignUpResponse.from(accessToken, refreshToken, user, isNewUser);
 
-        ResponseCookie accessCookie = cookieGenerator.generateCookie("AccessToken", accessToken);
-        ResponseCookie refreshCookie = cookieGenerator.generateCookie("RefreshToken", refreshToken);
+        ResponseCookie accessCookie = cookieGenerator.generateCookie("accessToken", accessToken);
+        ResponseCookie refreshCookie = cookieGenerator.generateCookie("refreshToken", refreshToken);
 
         return ResponseEntity
                 .ok()
