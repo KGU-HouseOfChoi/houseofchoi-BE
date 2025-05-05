@@ -5,6 +5,7 @@ import com.noraknorak.user.domain.User;
 
 public record UserSignUpResponse(
         String accessToken,
+        String refreshToken,
         Long userId,
         String name,
         String birth,
@@ -13,9 +14,10 @@ public record UserSignUpResponse(
         Role role,
         boolean isNewUser
 ) {
-    public static UserSignUpResponse from(String accessToken, User user, boolean isNewUser) {
+    public static UserSignUpResponse from(String accessToken, String refreshToken, User user, boolean isNewUser) {
         return new UserSignUpResponse(
                 accessToken,
+                refreshToken,
                 user.getId(),
                 user.getName(),
                 user.getBirth(),

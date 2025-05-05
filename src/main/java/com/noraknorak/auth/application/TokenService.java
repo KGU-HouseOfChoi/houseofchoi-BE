@@ -20,4 +20,11 @@ public class TokenService {
                 .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
         return tokenProvider.provideAccessToken(user);
     }
+
+    public String provideRefreshToken(TokenRequest request) {
+        User user = userRepository.findById(request.userId())
+                .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
+
+        return tokenProvider.provideRefreshToken(user);
+    }
 }

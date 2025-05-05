@@ -35,13 +35,17 @@ public class UserRegisterController implements UserRegisterSwagger {
         boolean isNewUser = result.isNewUser();
 
         String accessToken = jwtTokenProvider.provideAccessToken(user);
+        String refreshToken = jwtTokenProvider.provideRefreshToken(user);
 
-        UserSignUpResponse response = UserSignUpResponse.from(accessToken, user, isNewUser);
+        UserSignUpResponse response = UserSignUpResponse.from(accessToken, refreshToken, user, isNewUser);
 
-        ResponseCookie cookie = cookieGenerator.generateCookie(accessToken);
+        ResponseCookie accessCookie = cookieGenerator.generateCookie("AccessToken", accessToken);
+        ResponseCookie refreshCookie = cookieGenerator.generateCookie("RefreshToken", refreshToken);
 
-        return ResponseEntity.ok()
-                .header(HttpHeaders.SET_COOKIE, cookie.toString())
+        return ResponseEntity
+                .ok()
+                .header(HttpHeaders.SET_COOKIE, accessCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshCookie.toString())
                 .body(new RestResponse<>(response));
     }
 
