@@ -1,6 +1,7 @@
 package com.noraknorak.auth.presentation;
 
 import com.noraknorak.auth.application.LoginService;
+import com.noraknorak.auth.application.RefreshTokenService;
 import com.noraknorak.auth.dto.request.LoginRequest;
 import com.noraknorak.auth.dto.response.TokenResponse;
 import com.noraknorak.auth.infrastructure.CookieGenerator;
@@ -19,8 +20,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("v1/auth")
 @RequiredArgsConstructor
 public class LoginController implements LoginSwagger{
+
     private final LoginService loginService;
     private final CookieGenerator cookieGenerator;
+    private final RefreshTokenService refreshTokenService;
 
     @Override
     @PostMapping("/login")
@@ -29,8 +32,10 @@ public class LoginController implements LoginSwagger{
         String accessToken = tokenResponse.accessToken();
         String refreshToken = tokenResponse.refreshToken();
 
-        ResponseCookie accessCookie = cookieGenerator.generateCookie("AccessToken", accessToken);
-        ResponseCookie refreshCookie = cookieGenerator.generateCookie("RefreshToken", refreshToken);
+        refreshTokenService.save(tokenResponse.userId(), refreshToken);
+
+        ResponseCookie accessCookie = cookieGenerator.generateCookie("accessToken", accessToken);
+        ResponseCookie refreshCookie = cookieGenerator.generateCookie("refreshToken", refreshToken);
 
         return ResponseEntity
                 .ok()
