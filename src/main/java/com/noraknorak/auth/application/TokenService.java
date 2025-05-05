@@ -27,4 +27,8 @@ public class TokenService {
 
         return tokenProvider.provideRefreshToken(user);
     }
+
+    public Long getUserId(String token){
+        return tokenProvider.getUserId(token);
+    }
 }

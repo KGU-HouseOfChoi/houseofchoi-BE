@@ -1,5 +1,9 @@
 package com.noraknorak.user.application;
 
+import com.noraknorak.auth.application.RefreshTokenService;
+import com.noraknorak.auth.application.TokenService;
+import com.noraknorak.auth.dto.request.TokenRequest;
+import com.noraknorak.auth.exception.AuthenticationErrorCode;
 import com.noraknorak.sms.domain.AuthCodeManager;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
@@ -8,6 +12,7 @@ import com.noraknorak.user.domain.value.UserCodeGenerator;
 import com.noraknorak.user.exception.UserErrorCode;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.response.UserNewTokenResponse;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResult;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +26,8 @@ public class UserRegisterService {
 
     private final UserRepository userRepository;
     private final AuthCodeManager authCodeManager;
+    private final TokenService tokenService;
+    private final RefreshTokenService refreshTokenService;
 
     //유저 등록
     @Transactional
@@ -77,5 +84,25 @@ public class UserRegisterService {
             return true;
         }
         throw UserErrorCode.NOT_EQUAL_CODE.toException();
+    }
+
+    @Transactional
+    public UserNewTokenResponse issueNewToken(String refreshToken){
+        if (refreshToken == null || refreshToken.isBlank()) {
+            throw AuthenticationErrorCode.EMPTY_TOKEN.toException();
+        }
+
+        Long id = tokenService.getUserId(refreshToken);
+
+        User user = userRepository.findById(id)
+                .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
+
+        String newAccessToken = tokenService.provideAccessToken(new TokenRequest(user.getId()));
+        String newRefreshToken = tokenService.provideRefreshToken(new TokenRequest(user.getId()));
+
+        refreshTokenService.delete(user.getId());
+        refreshTokenService.save(user.getId(), newRefreshToken);
+
+        return UserNewTokenResponse.of(newAccessToken, newRefreshToken);
     }
 }
