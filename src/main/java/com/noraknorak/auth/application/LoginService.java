@@ -20,9 +20,10 @@ public class LoginService {
                 .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
 
         String accessToken = tokenService.provideAccessToken(new TokenRequest(user.getId()));
+        String refreshToken = tokenService.provideRefreshToken(new TokenRequest(user.getId()));
 
         return TokenResponse.of(
-                accessToken, user
+                accessToken, refreshToken, user
         );
     }
 }
