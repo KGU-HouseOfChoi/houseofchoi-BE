@@ -3,10 +3,12 @@ package com.noraknorak.user.presentation.controller;
 import com.noraknorak.auth.application.RefreshTokenService;
 import com.noraknorak.auth.infrastructure.CookieGenerator;
 import com.noraknorak.auth.infrastructure.JwtTokenProvider;
+import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.core.presentation.RestResponse;
 import com.noraknorak.user.domain.User;
 import com.noraknorak.user.presentation.dto.request.UserSignUpRequest;
 import com.noraknorak.user.presentation.dto.request.UserVerifyCodeRequest;
+import com.noraknorak.user.presentation.dto.response.UserNewTokenResponse;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResponse;
 import com.noraknorak.user.presentation.dto.response.UserSignUpResult;
 import com.noraknorak.user.presentation.swagger.UserRegisterSwagger;
@@ -16,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -58,5 +61,21 @@ public class UserRegisterController implements UserRegisterSwagger {
     public ResponseEntity<RestResponse<Boolean>> verifyCode(@Valid @RequestBody UserVerifyCodeRequest userVerifyCodeRequest) {
         boolean result = userRegisterService.verifyCode(userVerifyCodeRequest);
         return ResponseEntity.ok(new RestResponse<>(result));
+    }
+
+    @Override
+    @PostMapping("reissue")
+    public ResponseEntity<RestResponse<UserNewTokenResponse>> issueNewToken(
+            @RequestHeader(value = "refreshToken", required = false) String refreshToken
+    ) {
+        UserNewTokenResponse response = userRegisterService.issueNewToken(refreshToken);
+
+        ResponseCookie accessCookie = cookieGenerator.generateCookie("accessToken", response.accessToken());
+        ResponseCookie refreshCookie = cookieGenerator.generateCookie("refreshToken", response.refreshToken());
+
+        return ResponseEntity.ok()
+                .header(HttpHeaders.SET_COOKIE, accessCookie.toString())
+                .header(HttpHeaders.SET_COOKIE, refreshCookie.toString())
+                .body(new RestResponse<>(response));
     }
 }

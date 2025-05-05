@@ -80,6 +80,7 @@ public class JwtTokenProvider implements TokenProvider {
         }
     }
 
+    @Override
     public Long getUserId(String token) {
         return Long.parseLong(getPayload(token).getSubject());
     }
@@ -98,7 +99,8 @@ public class JwtTokenProvider implements TokenProvider {
         } else {
             expiryDate = Date.from(Instant.now().plus(expiration, ChronoUnit.DAYS));
             claims = Map.of(
-                    "type", type.getType()
+                    "type", type.getType(),
+                    "sub", user.getId().toString()
             );
         }
 
