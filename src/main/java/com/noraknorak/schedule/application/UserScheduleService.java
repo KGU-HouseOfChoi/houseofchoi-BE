@@ -1,5 +1,6 @@
 package com.noraknorak.schedule.application;
 
+import com.noraknorak.core.util.file.ImageUrlGenerator;
 import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.schedule.domain.repository.ScheduleRepository;
 import com.noraknorak.schedule.exception.ScheduleErrorCode;
@@ -17,6 +18,7 @@ import java.util.List;
 public class UserScheduleService {
 
     private final ScheduleRepository scheduleRepository;
+    private final ImageUrlGenerator imageUrlGenerator;
 
     @Transactional
     public List<UserScheduleDto> getDetailedSchedulesForUser(Long userId) {
@@ -30,7 +32,7 @@ public class UserScheduleService {
                 .stream()
                 .map(schedule -> {
                     List<LocalDate> dates = ScheduleDateUtils.extractProgramDates(schedule.getProgram());
-                    return UserScheduleDto.from(schedule, dates);
+                    return UserScheduleDto.from(schedule, dates, imageUrlGenerator);
                 })
                 .toList();
     }

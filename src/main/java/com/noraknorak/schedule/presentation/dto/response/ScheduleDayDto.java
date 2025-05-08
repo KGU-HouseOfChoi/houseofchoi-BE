@@ -1,5 +1,6 @@
 package com.noraknorak.schedule.presentation.dto.response;
 
+import com.noraknorak.core.util.file.ImageUrlGenerator;
 import com.noraknorak.program.domain.Program;
 import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.center.domain.Center;
@@ -12,9 +13,10 @@ public record ScheduleDayDto(
         Long price,
         String address,
         Double latitude,
-        Double longitude
+        Double longitude,
+        String imageUrl
 ) {
-    public static ScheduleDayDto from(Schedule schedule) {
+    public static ScheduleDayDto from(Schedule schedule, ImageUrlGenerator imageUrlGenerator) {
         Program program = schedule.getProgram();
         Center center = program.getCenter();
 
@@ -26,7 +28,8 @@ public record ScheduleDayDto(
                 program.getPrice(),
                 center.getAddress(),
                 center.getLatitude(),
-                center.getLongitude()
+                center.getLongitude(),
+                imageUrlGenerator.getImageUrlById(program.getId())
         );
     }
 }
