@@ -1,5 +1,6 @@
 package com.noraknorak.program.presentation.dto.response;
 
+import com.noraknorak.core.util.file.ImageUrlGenerator;
 import com.noraknorak.program.domain.Tag;
 import com.noraknorak.program.domain.Value.MainCategory;
 import com.noraknorak.program.domain.Program;
@@ -29,8 +30,9 @@ public class ProgramDetailDto {
     private List<String> tags;
     private Long centerId;
     private String centerName;
+    String imageUrl;
 
-    public static ProgramDetailDto toDto(Program program) {
+    public static ProgramDetailDto toDto(Program program, ImageUrlGenerator imageUrlGenerator) {
         var center = program.getCenter();
 
         return ProgramDetailDto.builder()
@@ -54,6 +56,7 @@ public class ProgramDetailDto {
                 )
                 .centerId(center != null ? center.getId() : null)
                 .centerName(center != null ? center.getName() : null)
+                .imageUrl(imageUrlGenerator.getImageUrlById(program.getId()))
                 .build();
     }
 }
