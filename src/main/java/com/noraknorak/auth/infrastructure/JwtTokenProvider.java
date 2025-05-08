@@ -111,4 +111,10 @@ public class JwtTokenProvider implements TokenProvider {
                 .signWith(SECRET_KEY)
                 .compact();
     }
+    public long getRemainingTime(String token) {
+        Claims claims = getPayload(token);
+        Date expiration = claims.getExpiration();
+        return expiration.getTime() - System.currentTimeMillis();
+    }
+
 }
