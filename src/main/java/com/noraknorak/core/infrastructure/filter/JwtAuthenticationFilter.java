@@ -35,6 +35,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private static final String BEARER_PREFIX = "Bearer ";
 
     private static final List<String> EXCLUDED_PATTERNS = List.of(
+            "/test/**",
             "/swagger-ui/**",
             "/v3/api-docs/**",
             "/swagger-ui.html",
