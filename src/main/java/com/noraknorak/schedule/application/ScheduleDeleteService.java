@@ -16,11 +16,11 @@ public class ScheduleDeleteService {
     private final ScheduleRepository scheduleRepository;
 
     @Transactional
-    public void deleteScheduleByUserAndProgram(CustomUserDetails customUserDetails, Long programId) {
+    public void deleteScheduleById(CustomUserDetails customUserDetails, Long scheduleId) {
         Long userId = customUserDetails.user().getId();
 
         Schedule schedule = scheduleRepository
-                .findByUserIdAndProgramId(userId, programId)
+                .findByIdAndUserId(scheduleId, userId)
                 .orElseThrow(() -> ScheduleErrorCode.SCHEDULE_NOT_FOUND.toException());
 
         scheduleRepository.delete(schedule);

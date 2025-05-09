@@ -19,13 +19,12 @@ public class ScheduleDeleteController implements ScheduleDeleteSwagger {
 
     private final ScheduleDeleteService scheduleDeleteService;
 
-    @Override
-    @DeleteMapping("/{programId}")
+    @DeleteMapping("/{scheduleId}")
     public ResponseEntity<RestResponse<Void>> deleteMySchedule(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
-            @PathVariable Long programId
+            @PathVariable Long scheduleId
     ) {
-        scheduleDeleteService.deleteScheduleByUserAndProgram(customUserDetails, programId);
+        scheduleDeleteService.deleteScheduleById(customUserDetails, scheduleId);
         return ResponseEntity.ok(new RestResponse<>(null));
     }
 }

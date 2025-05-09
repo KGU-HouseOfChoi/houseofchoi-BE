@@ -9,6 +9,5 @@ import java.util.Optional;
 public interface ScheduleRepository extends JpaRepository<Schedule, Long> {
     List<Schedule> findByUserId(Long userId);
     boolean existsByUserIdAndProgramId(Long userId, Long programId);
-    Optional<Schedule> findByUserIdAndProgramId(Long userId, Long programId);
-
+    Optional<Schedule> findByIdAndUserId(Long scheduleId, Long userId);
 }
