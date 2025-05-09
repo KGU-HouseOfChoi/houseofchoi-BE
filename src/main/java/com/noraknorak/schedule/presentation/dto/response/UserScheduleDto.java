@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 public record UserScheduleDto(
+        Long scheduleId,
         Long programId,
         String name,
         String mainCategory,
@@ -25,6 +26,7 @@ public record UserScheduleDto(
         Center center = program.getCenter();
 
         return new UserScheduleDto(
+                schedule.getId(),
                 program.getId(),
                 program.getName(),
                 program.getMainCategory(),

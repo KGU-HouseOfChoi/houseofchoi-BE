@@ -6,6 +6,7 @@ import com.noraknorak.schedule.domain.Schedule;
 import com.noraknorak.center.domain.Center;
 
 public record ScheduleDayDto(
+        Long scheduleId,
         Long programId,
         String name,
         String mainCategory,
@@ -21,6 +22,7 @@ public record ScheduleDayDto(
         Center center = program.getCenter();
 
         return new ScheduleDayDto(
+                schedule.getId(),
                 program.getId(),
                 program.getName(),
                 program.getMainCategory(),
