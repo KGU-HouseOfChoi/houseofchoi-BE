@@ -16,8 +16,13 @@ import java.util.List;
 public interface UserScheduleSwagger {
 
     @Operation(
-            summary = "내가 등록한 일정 정보 조회 API",
-            description = "로그인한 사용자가 등록한 프로그램 목록과, 각 프로그램의 상세 정보 및 실제 날짜 목록을 조회합니다.",
+            summary = "일정 조회 API",
+            description = """
+                로그인한 사용자가 등록한 프로그램 목록을 조회합니다. 
+                만약 관계 설정(부모 또는 자식 관계)이 되어 있다면, 
+                관계 사용자가 등록한 일정도 함께 조회됩니다.
+                같은 프로그램에 중복으로 등록된 경우(예: 부모와 자식이 같은 프로그램 등록 시)는 한 번만 조회됩니다.
+                """,
             operationId = "v1/schedule/my-schedule"
     )
     @ApiErrorCode(ScheduleErrorCode.class)
