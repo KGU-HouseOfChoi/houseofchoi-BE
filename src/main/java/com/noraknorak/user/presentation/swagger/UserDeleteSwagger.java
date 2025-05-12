@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.RequestHeader;
 
-@Tag(name = "User", description = "유저 삭제 관련 API")
+@Tag(name = "User", description = "유저 관련 API")
 public interface UserDeleteSwagger {
     @Operation(
             summary = "유저 삭제 API",

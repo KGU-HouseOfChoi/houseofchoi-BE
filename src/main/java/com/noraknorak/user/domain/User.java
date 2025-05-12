@@ -50,4 +50,9 @@ public class User extends BaseLongIdEntity {
 
     @Column(name = "related_user")
     private Long relatedUser;
+
+    public void clearRelation() {
+        this.relatedUser = null;
+        this.role = null;
+    }
 }
