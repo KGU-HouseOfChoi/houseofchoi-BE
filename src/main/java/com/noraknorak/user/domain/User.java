@@ -55,4 +55,9 @@ public class User extends BaseLongIdEntity {
         this.relatedUser = null;
         this.role = null;
     }
+
+    public void setPersonality(Personality personality) {
+        this.personality = personality;
+    }
+
 }
