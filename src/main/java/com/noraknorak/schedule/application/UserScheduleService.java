@@ -32,14 +32,14 @@ public class UserScheduleService {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
 
-        List<Long> userIdsToSearch = new ArrayList<>();
+        Set<Long> userIdsToSearch = new HashSet<>();
         userIdsToSearch.add(userId);
 
         if (user.getRelatedUser() != null) {
             userIdsToSearch.add(user.getRelatedUser());
         }
 
-        List<Schedule> schedules = scheduleRepository.findByUserIdIn(userIdsToSearch);
+        List<Schedule> schedules = scheduleRepository.findByUserIdIn(new ArrayList<>(userIdsToSearch));
 
         if (schedules.isEmpty()) {
             throw ScheduleErrorCode.SCHEDULE_NOT_FOUND.toException();
