@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -25,4 +26,7 @@ public interface UserRepository extends JpaRepository<User, Long> {
             @Param("role") Role role,
             @Param("relatedUser") Long relatedUser
     );
+    @Query("SELECT u FROM User u WHERE u.relatedUser = :relatedUserId")
+    List<User> findAllByRelatedUserId(@Param("relatedUserId") Long relatedUserId);
+
 }
