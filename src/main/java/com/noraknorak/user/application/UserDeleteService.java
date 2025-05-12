@@ -26,9 +26,6 @@ public class UserDeleteService {
             related.clearRelation();
         }
 
-        if (!userRepository.existsById(userId)) {
-            throw UserErrorCode.USER_NOT_FOUND.toException();
-        }
         userRepository.deleteById(userId);
     }
 }
