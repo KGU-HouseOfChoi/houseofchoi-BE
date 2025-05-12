@@ -14,7 +14,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 @Tag(name = "Schedule", description = "일정 삭제 API")
 public interface ScheduleDeleteSwagger {
 
-    @Operation(summary = "내 일정 삭제", description = "로그인된 사용자가 등록한 특정 프로그램 일정을 삭제합니다.")
+    @Operation(summary = "일정 삭제", description = "로그인된 사용자와 관계 설정된 유저가 등록한 특정 프로그램 일정을 삭제합니다.")
     @ApiErrorCode(ScheduleErrorCode.class)
     ResponseEntity<RestResponse<Void>> deleteMySchedule(
             @AuthenticationPrincipal CustomUserDetails customUserDetails,
