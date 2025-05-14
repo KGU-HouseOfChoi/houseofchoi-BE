@@ -30,7 +30,11 @@ public class ProgramDetailDto {
     private List<String> tags;
     private Long centerId;
     private String centerName;
-    String imageUrl;
+    private String address;
+    private Double latitude;
+    private Double longitude;
+    private String tel;
+    private String imageUrl;
 
     public static ProgramDetailDto toDto(Program program, ImageUrlGenerator imageUrlGenerator) {
         var center = program.getCenter();
@@ -56,6 +60,10 @@ public class ProgramDetailDto {
                 )
                 .centerId(center != null ? center.getId() : null)
                 .centerName(center != null ? center.getName() : null)
+                .address(center != null ? center.getAddress() : null)
+                .latitude(center != null ? center.getLatitude() : null)
+                .longitude(center != null ? center.getLongitude() : null)
+                .tel(center != null ? center.getTel() : null)
                 .imageUrl(imageUrlGenerator.getImageUrlById(program.getId()))
                 .build();
     }
