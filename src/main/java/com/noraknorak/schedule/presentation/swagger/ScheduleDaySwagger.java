@@ -18,7 +18,7 @@ public interface ScheduleDaySwagger {
 
     @Operation(
             summary = "요일 기반 내 프로그램 조회",
-            description = "요청한 요일(월~일)에 해당하는 로그인 사용자의 프로그램 정보를 반환합니다.",
+            description = "요청한 요일(월~일)에 해당하는 로그인 사용자와 연관된 사용자의 프로그램 정보를 반환합니다.",
             operationId = "v1/schedule/my-schedule-day/{day}"
     )
     @ApiErrorCode(ScheduleErrorCode.class)

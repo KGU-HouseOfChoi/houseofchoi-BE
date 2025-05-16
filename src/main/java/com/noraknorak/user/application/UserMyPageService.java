@@ -34,6 +34,7 @@ public class UserMyPageService {
 
         return UserMyPageResponse.builder()
                 .name(user.getName())
+                .userCode(user.getUserCode())
                 .relatedUserName(relatedUserName)
                 .relatedUserBirth(relatedUserBirth)
                 .build();

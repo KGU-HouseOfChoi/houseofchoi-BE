@@ -31,9 +31,6 @@ public class ProgramService {
 
     public List<ProgramDetailDto> findProgramsByName(String name) {
         List<Program> programs = programRepository.findByNameContainingIgnoreCase(name);
-        if (programs.isEmpty()) {
-            throw ProgramErrorCode.PROGRAM_NOT_FOUND.toException();
-        }
         return programs.stream()
                 .map(program -> ProgramDetailDto.toDto(program, imageUrlGenerator))
                 .collect(Collectors.toList());

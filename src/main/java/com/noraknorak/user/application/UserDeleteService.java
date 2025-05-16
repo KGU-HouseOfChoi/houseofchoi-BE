@@ -1,11 +1,14 @@
 package com.noraknorak.user.application;
 
+import com.noraknorak.user.domain.User;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.exception.UserErrorCode;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
@@ -15,9 +18,14 @@ public class UserDeleteService {
 
     @Transactional
     public void deleteUserById(Long userId) {
-        if (!userRepository.existsById(userId)) {
-            throw UserErrorCode.USER_NOT_FOUND.toException();
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> UserErrorCode.USER_NOT_FOUND.toException());
+
+        List<User> relatedUsers = userRepository.findAllByRelatedUserId(userId);
+        for (User related : relatedUsers) {
+            related.clearRelation();
         }
+
         userRepository.deleteById(userId);
     }
 }
