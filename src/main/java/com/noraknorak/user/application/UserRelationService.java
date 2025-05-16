@@ -5,6 +5,7 @@ import com.noraknorak.core.infrastructure.security.CustomUserDetails;
 import com.noraknorak.user.domain.Personality;
 import com.noraknorak.user.domain.Role;
 import com.noraknorak.user.domain.User;
+import com.noraknorak.user.domain.repository.PersonalityRepository;
 import com.noraknorak.user.domain.repository.UserRepository;
 import com.noraknorak.user.exception.UserErrorCode;
 import jakarta.transaction.Transactional;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 public class UserRelationService {
 
     private final UserRepository userRepository;
+    private final PersonalityRepository personalityRepository;
 
     // 부모/자식 연동 코드 검증
     public User validateUserCode(String code) {
@@ -46,7 +48,11 @@ public class UserRelationService {
                 userRepository.updateUserRoleAndRelatedUser(userId, Role.SENIOR, relatedUserId);
 
                 if (relatedUser.getPersonality() != null) {
-                    me.setPersonality(null);
+                    Personality existingPersonality = me.getPersonality();
+                    if (existingPersonality != null) {
+                        personalityRepository.delete(existingPersonality); // or use orphanRemoval
+                        me.setPersonality(null);
+                    }
 
                     Personality copied = Personality.builder()
                             .tag(relatedUser.getPersonality().getTag())
