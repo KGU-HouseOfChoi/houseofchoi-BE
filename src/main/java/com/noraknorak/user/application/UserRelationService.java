@@ -42,16 +42,20 @@ public class UserRelationService {
                     .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
 
             if (Role.SENIOR.getName().equals(role)) {
-                userRepository.updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);
+                userRepository.updateUserRoleAndRelatedUser(userId, Role.SENIOR, relatedUserId);
+                userRepository.updateUserRoleAndRelatedUser(relatedUserId, Role.GUARDIAN, userId);
 
             } else if (Role.GUARDIAN.getName().equals(role)) {
-                userRepository.updateUserRoleAndRelatedUser(userId, Role.SENIOR, relatedUserId);
+                userRepository.updateUserRoleAndRelatedUser(userId, Role.GUARDIAN, relatedUserId);
+                userRepository.updateUserRoleAndRelatedUser(relatedUserId, Role.SENIOR, userId);
 
                 if (relatedUser.getPersonality() != null) {
                     Personality existingPersonality = me.getPersonality();
+                    System.out.println(existingPersonality);
                     if (existingPersonality != null) {
                         personalityRepository.delete(existingPersonality); // or use orphanRemoval
                         me.setPersonality(null);
+                        personalityRepository.flush();
                     }
 
                     Personality copied = Personality.builder()
@@ -64,6 +68,7 @@ public class UserRelationService {
                             .build();
 
                     me.setPersonality(copied);
+                    personalityRepository.save(copied);
                 }
 
             } else {
