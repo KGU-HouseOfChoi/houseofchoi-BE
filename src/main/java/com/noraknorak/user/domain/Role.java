@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 @Getter
 public enum Role {
     SENIOR("부모"),
-    GUARDIAN("자식");
+    GUARDIAN("자녀");
 
     private final String name;
 }
