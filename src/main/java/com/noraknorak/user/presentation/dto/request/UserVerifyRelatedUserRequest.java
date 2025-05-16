@@ -9,7 +9,7 @@ import java.util.Map;
 public record UserVerifyRelatedUserRequest(
 
         @NotNull(message = "부모/자식 정보를 입력해 주세요")
-        @Pattern(regexp = "^(부모|자식)$", message = "role은 '부모' 또는 '자식'이어야 합니다.")
+        @Pattern(regexp = "^(부모|자녀)$", message = "role은 '부모' 또는 '자식'이어야 합니다.")
         @Schema(description = "현재 로그인 한 사용자의 역할(부모 OR 자식)")
         String role,
 
