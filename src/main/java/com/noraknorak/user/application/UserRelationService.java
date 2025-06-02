@@ -41,6 +41,14 @@ public class UserRelationService {
             User relatedUser = userRepository.findById(relatedUserId)
                     .orElseThrow(UserErrorCode.USER_NOT_FOUND::toException);
 
+            if (me.getRole() != null && me.getRole().getName().equals(relatedUser.getRole().getName())) {
+                throw UserErrorCode.SAME_ROLE_RELATION_NOT_ALLOWED.toException();
+            }
+
+            if (relatedUser.getRelatedUser() != null) {
+                throw UserErrorCode.RELATED_USER_ALREADY_CONNECTED.toException();
+            }
+
             if (Role.SENIOR.getName().equals(role)) {
                 userRepository.updateUserRoleAndRelatedUser(userId, Role.SENIOR, relatedUserId);
                 userRepository.updateUserRoleAndRelatedUser(relatedUserId, Role.GUARDIAN, userId);
@@ -51,9 +59,8 @@ public class UserRelationService {
 
                 if (relatedUser.getPersonality() != null) {
                     Personality existingPersonality = me.getPersonality();
-                    System.out.println(existingPersonality);
                     if (existingPersonality != null) {
-                        personalityRepository.delete(existingPersonality); // or use orphanRemoval
+                        personalityRepository.delete(existingPersonality);
                         me.setPersonality(null);
                         personalityRepository.flush();
                     }
